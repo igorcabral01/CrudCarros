@@ -13,31 +13,31 @@ namespace CrudCarros.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Fabricante>> GetAllAsync()
+        public async Task<IEnumerable<Fabricante>> ObterTodos()
         {
             return await _context.Fabricantes.ToListAsync();
         }
 
-        public async Task<Fabricante?> GetByIdAsync(Guid id)
+        public async Task<Fabricante?> ObterPorId(Guid id)
         {
             return await _context.Fabricantes.FindAsync(id);
         }
 
-        public async Task AddAsync(Fabricante fabricante)
+        public async Task Adicionar(Fabricante fabricante)
         {
             await _context.Fabricantes.AddAsync(fabricante);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(Fabricante fabricante)
+        public async Task Atualizar(Fabricante fabricante)
         {
             _context.Fabricantes.Update(fabricante);
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task Excluir(Guid id)
         {
-            var fabricante = await GetByIdAsync(id);
+            var fabricante = await ObterPorId(id);
             if (fabricante != null)
             {
                 _context.Fabricantes.Remove(fabricante);

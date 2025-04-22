@@ -4,6 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using FluentValidation.AspNetCore;
 using FluentValidation;
 
+using CrudCarros.Services;
+using CrudCarros.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -26,6 +29,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Configurando o Identity
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+// Registro explícito do FabricanteService para garantir a resolução correta
+builder.Services.AddScoped<FabricanteService>();
+
+// Registro explícito do FabricanteRepository para resolver dependências
+builder.Services.AddScoped<FabricanteRepository>();
 
 // Adicionando o serviço de MemoryCache
 builder.Services.AddMemoryCache();

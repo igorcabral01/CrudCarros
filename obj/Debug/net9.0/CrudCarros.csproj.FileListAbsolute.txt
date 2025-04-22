@@ -309,3 +309,8 @@ C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\refint\CrudCarros.dll
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\CrudCarros.pdb
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\CrudCarros.genruntimeconfig.cache
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\ref\CrudCarros.dll
+C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\MediatR.dll
+C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\MediatR.Contracts.dll
+C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\MediatR.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\CrudCarros.sourcelink.json
+C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\Scrutor.dll
