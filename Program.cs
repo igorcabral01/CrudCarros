@@ -27,14 +27,23 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Configurando o Identity
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddDefaultIdentity<Usuario>(options =>
+{
+    options.Password.RequireDigit = true;
+    options.Password.RequiredLength = 6;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = true;
+    options.Password.RequireLowercase = true;
+    options.SignIn.RequireConfirmedAccount = false;
+})
+.AddEntityFrameworkStores<ApplicationDbContext>();
 
-// Registro explícito do FabricanteService para garantir a resolução correta
-builder.Services.AddScoped<FabricanteService>();
-
-// Registro explícito do FabricanteRepository para resolver dependências
-builder.Services.AddScoped<FabricanteRepository>();
+// Ajuste para registrar classes concretas além de interfaces
+builder.Services.Scan(scan => scan
+    .FromAssemblyOf<Program>()
+    .AddClasses(classes => classes.InNamespaces("CrudCarros.Services", "CrudCarros.Repositories"))
+    .AsSelfWithInterfaces()
+    .WithScopedLifetime());
 
 // Adicionando o serviço de MemoryCache
 builder.Services.AddMemoryCache();
@@ -65,7 +74,7 @@ app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
+    pattern: "{controller=Home}/{action=Login}/{id?}")
     .WithStaticAssets();
 
 app.Run();

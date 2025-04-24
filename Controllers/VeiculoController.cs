@@ -8,79 +8,79 @@ namespace CrudCarros.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class FabricanteController : ControllerBase
+    public class VeiculoController : ControllerBase
     {
-        private readonly FabricanteService _fabricanteService;
+        private readonly VeiculoService _veiculoService;
         private readonly IMemoryCache _memoryCache;
 
-        public FabricanteController(FabricanteService fabricanteService, IMemoryCache memoryCache)
+        public VeiculoController(VeiculoService veiculoService, IMemoryCache memoryCache)
         {
-            _fabricanteService = fabricanteService;
+            _veiculoService = veiculoService;
             _memoryCache = memoryCache;
         }
 
         [HttpGet]
         public async Task<IActionResult> ObterTodos()
         {
-            string cacheKey = "Fabricantes";
-            if (!_memoryCache.TryGetValue(cacheKey, out IEnumerable<Fabricante>? fabricantes))
+            string cacheKey = "Veiculos";
+            if (!_memoryCache.TryGetValue(cacheKey, out IEnumerable<Veiculo>? veiculos))
             {
-                fabricantes = await _fabricanteService.GetAll();
+                veiculos = await _veiculoService.ObterTodos();
                 var cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(5));
-                _memoryCache.Set(cacheKey, fabricantes, cacheEntryOptions);
+                _memoryCache.Set(cacheKey, veiculos, cacheEntryOptions);
             }
-            return Ok(fabricantes);
+            return Ok(veiculos);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> ObterPorId(Guid id)
+        public IActionResult ObterPorId(Guid id)
         {
-            var fabricante = await _fabricanteService.GetById(id);
-            if (fabricante == null)
+            var veiculo = _veiculoService.ObterPorId(id);
+            if (veiculo == null)
             {
                 return NotFound();
             }
-            return Ok(fabricante);
+            return Ok(veiculo);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Inserir([FromBody] Fabricante fabricante)
+        public async Task<IActionResult> Inserir([FromBody] Veiculo veiculo)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            await _fabricanteService.Add(fabricante);
-            return Ok(fabricante.Nome);
+            await _veiculoService.Inserir(veiculo);
+            return Ok(veiculo.Nome);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Atualizar(Guid id, [FromBody] Fabricante fabricante)
+        public async Task<IActionResult> Atualizar(Guid id, [FromBody] Veiculo veiculo)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != fabricante.FabricanteId)
+            if (id != veiculo.VeiculoId)
             {
                 return BadRequest("ID mismatch.");
             }
 
-            await _fabricanteService.Update(fabricante);
+            await _veiculoService.Atualizar(veiculo);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Excluir(Guid id)
         {
-            var fabricante = await _fabricanteService.GetById(id);
-            if (fabricante == null)
+            var veiculo = _veiculoService.ObterPorId(id);
+            if (veiculo == null)
             {
                 return NotFound();
             }
 
-            await _fabricanteService.Delete(id);
+            await _veiculoService.Excluir(id);
             return NoContent();
         }
     }

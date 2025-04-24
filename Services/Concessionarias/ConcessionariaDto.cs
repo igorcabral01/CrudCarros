@@ -1,12 +1,11 @@
+
+
 using System.ComponentModel.DataAnnotations;
 
-namespace CrudCarros.Models
+namespace CrudCarros.Services.Concessionarias
 {
-    public class Concessionaria
+    public class ConcessionariaDto
     {
-        [Key]
-        public Guid ConcessionariaId { get; set; } = Guid.NewGuid();
-
         [Required]
         [MaxLength(100)]
         public string? Nome { get; set; }

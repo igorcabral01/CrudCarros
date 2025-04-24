@@ -1,13 +1,23 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using CrudCarros.Models;
+using CrudCarros.Models.DbContext;
 
 public class HomeController : Controller
 {
     private readonly IMemoryCache _memoryCache;
+    private readonly ApplicationDbContext _context;
+    private readonly UserManager<Usuario> _userManager;
+    private readonly SignInManager<Usuario> _signInManager;
 
-    public HomeController(IMemoryCache memoryCache)
+    public HomeController(IMemoryCache memoryCache, ApplicationDbContext context, UserManager<Usuario> userManager, SignInManager<Usuario> signInManager)
     {
         _memoryCache = memoryCache;
+        _context = context;
+        _userManager = userManager;
+        _signInManager = signInManager;
     }
 
     public IActionResult Index()
@@ -34,5 +44,46 @@ public class HomeController : Controller
 
         ViewBag.CachedData = cachedData;
         return View();
+    }
+
+    public IActionResult Login()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Login(string email, string password)
+    {
+        var result = await _signInManager.PasswordSignInAsync(email, password, false, false);
+
+        if (result.Succeeded)
+        {
+            return RedirectToAction("Index", "Home");
+        }
+
+        ViewBag.MensagemErro = "Credenciais inválidas.";
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Register(string nome, string email, string password)
+    {
+        var usuario = new Usuario { UserName = email, Email = email, Nome = nome };
+        var result = await _userManager.CreateAsync(usuario, password);
+
+        if (result.Succeeded)
+        {
+            await _signInManager.SignInAsync(usuario, isPersistent: false);
+            return RedirectToAction("Index", "Home");
+        }
+
+        ViewBag.MensagemErro = string.Join(" ", result.Errors.Select(e => e.Description));
+        return View("Login");
+    }
+
+    public IActionResult Logout()
+    {
+        HttpContext.Session.Remove("UsuarioLogado");
+        return RedirectToAction("Login", "Home");
     }
 }

@@ -230,7 +230,6 @@ C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\a3ygkwa5zy-2z0ns9n
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\nezrqnk58p-muycvpuwrr.gz
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\v0zgfp0y55-87fc7y1x7t.gz
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\yfc7ypekbg-mlv21k5csn.gz
-C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\ia6b3kyyvc-b9sayid5wm.gz
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\yb2rzwxrdi-61n19gt1b8.gz
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\1dvw6rfekl-xtxxf3hu2r.gz
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\y53pbs5y80-bqjiyaj88i.gz
@@ -292,8 +291,6 @@ C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\d5dud4vsuq-2z0ns9n
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\skiv6jub47-muycvpuwrr.gz
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\d8nvln23p6-87fc7y1x7t.gz
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\nvah7spj6e-mlv21k5csn.gz
-C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\yhi846i3o9-lrcvwt7ol9.gz
-C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\xl84u09tb5-lrcvwt7ol9.gz
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\staticwebassets.build.json
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\staticwebassets.development.json
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\staticwebassets.build.endpoints.json
@@ -314,3 +311,6 @@ C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\MediatR.Contracts.dll
 C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\MediatR.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\CrudCarros.sourcelink.json
 C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\Scrutor.dll
+C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\yhi846i3o9-qvhl3wd1wf.gz
+C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\xl84u09tb5-qvhl3wd1wf.gz
+C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\ia6b3kyyvc-q0ikdnttpe.gz
