@@ -1,73 +1,123 @@
 # CrudCarros
 
-## Instruções para Configuração e Execução do Projeto
+Sistema completo para gestão de concessionárias, veículos, fabricantes, usuários e vendas de automóveis.
 
+## Sumário
+- [Visão Geral](#visão-geral)
+- [Tecnologias Utilizadas](#tecnologias-utilizadas)
+- [Como Executar](#como-executar)
+- [Funcionalidades](#funcionalidades)
+- [Regras de Negócio](#regras-de-negócio)
+- [Estrutura do Projeto](#estrutura-do-projeto)
+
+---
+
+## Visão Geral
+O CrudCarros é uma aplicação ASP.NET Core MVC com Entity Framework Core, focada em operações de cadastro, consulta, atualização e exclusão (CRUD) para concessionárias, veículos, fabricantes, usuários e vendas. O sistema possui autenticação, autorização por perfil, validações robustas e interface moderna.
+
+## Tecnologias Utilizadas
+- ASP.NET Core MVC (.NET 9)
+- Entity Framework Core
+- Identity (autenticação e autorização)
+- FluentValidation
+- Bootstrap 5
+- SQL Server (LocalDB ou outro)
+- Swagger (documentação de API)
+
+## Como Executar
 1. **Pré-requisitos:**
-   - .NET 9.0 SDK instalado
-   - SQL Server LocalDB ou outro SQL Server disponível
+   - .NET 9.0 SDK
+   - SQL Server LocalDB ou outro SQL Server
 
-2. **Configuração do Banco de Dados:**
-   - Verifique a string de conexão em `appsettings.json`.
-   - Para criar o banco e aplicar as migrations, execute:
+2. **Configuração:**
+   - Ajuste a string de conexão em `appsettings.json`.
+   - Execute as migrations:
      ```bash
      dotnet ef database update
      ```
-
-3. **Restaurar Dependências:**
-   - Execute:
+   - Restaure dependências:
      ```bash
      dotnet restore
      ```
-
-4. **Executar o Projeto:**
-   - No terminal, execute:
+   - Rode o projeto:
      ```bash
      dotnet run
      ```
-   - O sistema estará disponível em `https://localhost:5001` ou `http://localhost:5000`.
+   - Acesse: https://localhost:5001 ou http://localhost:5000
 
-5. **Acessar o Sistema:**
-   - Acesse a tela de login.
-   - Para registrar um novo usuário, clique em "Registre-se".
+3. **Acesso:**
+   - Tela de login disponível na raiz.
+   - Usuário admin padrão: `admin@admin.com` / senha: `Admin123!`
+   - Registre novos usuários conforme necessário.
 
-6. **Observações:**
-   - O projeto utiliza ASP.NET Core MVC, Entity Framework Core e Identity.
-   - Para dúvidas, consulte o código ou entre em contato com o desenvolvedor.
-
-## Funcionalidades do Sistema
-
-- **Autenticação de Usuário:**
-  - Login e registro de novos usuários com Identity.
-  - Modal de registro estilizado e seguro.
-
+## Funcionalidades
+- **Autenticação e Perfis:**
+  - Login, registro, perfis de Administrador e Usuário.
+  - Controle de acesso por perfil.
 - **Gestão de Concessionárias:**
-  - Cadastro, listagem e visualização de concessionárias.
+  - Cadastro, edição, exclusão, listagem e busca por nome/localização.
   - Busca de endereço por CEP.
-
 - **Gestão de Veículos:**
-  - Cadastro de veículos com vínculo ao fabricante.
-  - Listagem de veículos cadastrados.
-
+  - Cadastro, edição, exclusão, listagem e busca por fabricante/modelo.
 - **Gestão de Fabricantes:**
-  - Cadastro e listagem de fabricantes de veículos.
-
+  - Cadastro, edição, exclusão e listagem.
+- **Gestão de Usuários:**
+  - Cadastro, edição, exclusão e listagem.
 - **Venda de Veículos:**
-  - Tela para realizar venda, selecionando concessionária, veículo e preenchendo dados do cliente.
+  - Realização de venda, seleção de concessionária, veículo e preenchimento dos dados do cliente.
   - Geração de protocolo único para cada venda.
-
+- **Validações:**
+  - Backend (FluentValidation) e frontend.
+- **APIs REST:**
+  - Endpoints para todas as entidades principais.
+- **Cache:**
+  - Listagens otimizadas com cache em memória.
+- **Interface Moderna:**
+  - Layout responsivo, modais e formulários estilizados.
 - **Relatórios:**
   - Estrutura pronta para relatórios de vendas e estoque (implementação futura).
 
-- **Validações:**
-  - Validação de dados no backend (FluentValidation) e frontend.
+## Regras de Negócio
+### Concessionária
+- Nome, endereço, cidade, estado, CEP (formato 00000-000), telefone e e-mail obrigatórios.
+- Capacidade máxima de veículos deve ser positiva.
+- Telefone e e-mail validados por formato.
+- Busca de endereço por CEP integrada à BrasilAPI.
 
-- **Interface Moderna:**
-  - Layout responsivo com Bootstrap 5.
-  - Modais e formulários estilizados para melhor experiência do usuário.
+### Fabricante
+- Nome, país de origem e ano de fundação obrigatórios.
+- Ano de fundação não pode ser futuro.
+- Website opcional, mas validado se informado.
 
-- **APIs REST:**
-  - Endpoints para operações CRUD de concessionárias, veículos, fabricantes e usuários.
+### Veículo
+- Nome, ano de fabricação (>= 1900), preço (> 0), fabricante e tipo obrigatórios.
+- Descrição opcional (até 500 caracteres).
+- Não é permitido cadastrar veículo com preço negativo.
 
-- **Outros:**
-  - Suporte a cache para melhorar performance de listagens.
-  - Estrutura preparada para integração com relatórios e gráficos.
+### Usuário
+- Nome, e-mail e senha obrigatórios.
+- E-mail único e válido.
+- Senha com mínimo de 6 caracteres, pelo menos uma letra maiúscula, uma minúscula e um dígito.
+- Perfis: Administrador (pode promover/rebaixar usuários) e Usuário.
+
+### Venda
+- Concessionária, fabricante, veículo, nome, CPF (formato 000.000.000-00), telefone, data da venda e preço obrigatórios.
+- Data da venda não pode ser futura.
+- Preço de venda deve ser positivo e não pode ser maior que o preço do veículo.
+- Geração automática de número de protocolo único para cada venda.
+
+## Estrutura do Projeto
+```
+Controllers/         # Controllers MVC e APIs
+Models/              # Modelos de domínio
+Repositories/        # Acesso a dados (Entity Framework)
+Services/            # Lógica de negócio
+Validators/          # Validações (FluentValidation)
+Views/               # Views Razor (MVC)
+Migrations/          # Migrations do banco de dados
+wwwroot/             # Arquivos estáticos (CSS, JS, etc)
+```
+
+---
+
+Para dúvidas, consulte o código ou entre em contato com o desenvolvedor.
