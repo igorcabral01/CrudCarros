@@ -4,13 +4,21 @@
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\CrudCarros.qvhl3wd1wf.bundle.scp.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-Oj/x34baIGP4qJqfTzpraECN6HuXE4aX8OjRZWADih0="}]]]></EndpointProperties>
+<<<<<<< HEAD
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"3239"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022Oj/x34baIGP4qJqfTzpraECN6HuXE4aX8OjRZWADih0=\u0022"},{"Name":"Last-Modified","Value":"Fri, 25 Apr 2025 01:04:44 GMT"}]]]></ResponseHeaders>
+=======
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"3239"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022Oj/x34baIGP4qJqfTzpraECN6HuXE4aX8OjRZWADih0=\u0022"},{"Name":"Last-Modified","Value":"Fri, 25 Apr 2025 02:09:05 GMT"}]]]></ResponseHeaders>
+>>>>>>> desenvolvimento
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/CrudCarros/CrudCarros.qvhl3wd1wf.bundle.scp.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\CrudCarros.qvhl3wd1wf.bundle.scp.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"qvhl3wd1wf"},{"Name":"integrity","Value":"sha256-Oj/x34baIGP4qJqfTzpraECN6HuXE4aX8OjRZWADih0="},{"Name":"label","Value":"_content/CrudCarros/CrudCarros.bundle.scp.css"}]]]></EndpointProperties>
+<<<<<<< HEAD
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"3239"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022Oj/x34baIGP4qJqfTzpraECN6HuXE4aX8OjRZWADih0=\u0022"},{"Name":"Last-Modified","Value":"Fri, 25 Apr 2025 01:04:44 GMT"}]]]></ResponseHeaders>
+=======
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"3239"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022Oj/x34baIGP4qJqfTzpraECN6HuXE4aX8OjRZWADih0=\u0022"},{"Name":"Last-Modified","Value":"Fri, 25 Apr 2025 02:09:05 GMT"}]]]></ResponseHeaders>
+>>>>>>> desenvolvimento
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/CrudCarros/css/site.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\site.css'))</AssetFile>

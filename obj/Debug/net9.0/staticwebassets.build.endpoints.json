@@ -43,7 +43,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 25 Apr 2025 01:04:44 GMT"
+          "Value": "Fri, 25 Apr 2025 02:09:05 GMT"
         },
         {
           "Name": "Vary",
@@ -92,7 +92,11 @@
         },
         {
           "Name": "Last-Modified",
+<<<<<<< HEAD
           "Value": "Fri, 25 Apr 2025 01:04:44 GMT"
+=======
+          "Value": "Fri, 25 Apr 2025 02:09:05 GMT"
+>>>>>>> desenvolvimento
         }
       ],
       "EndpointProperties": [
@@ -141,7 +145,11 @@
         },
         {
           "Name": "Last-Modified",
+<<<<<<< HEAD
           "Value": "Fri, 25 Apr 2025 01:04:44 GMT"
+=======
+          "Value": "Fri, 25 Apr 2025 02:09:05 GMT"
+>>>>>>> desenvolvimento
         },
         {
           "Name": "Vary",
@@ -204,7 +212,11 @@
         },
         {
           "Name": "Last-Modified",
+<<<<<<< HEAD
           "Value": "Fri, 25 Apr 2025 01:04:44 GMT"
+=======
+          "Value": "Fri, 25 Apr 2025 02:09:05 GMT"
+>>>>>>> desenvolvimento
         },
         {
           "Name": "Vary",
@@ -245,7 +257,11 @@
         },
         {
           "Name": "Last-Modified",
+<<<<<<< HEAD
           "Value": "Fri, 25 Apr 2025 01:04:44 GMT"
+=======
+          "Value": "Fri, 25 Apr 2025 02:09:05 GMT"
+>>>>>>> desenvolvimento
         }
       ],
       "EndpointProperties": [
@@ -286,7 +302,11 @@
         },
         {
           "Name": "Last-Modified",
+<<<<<<< HEAD
           "Value": "Fri, 25 Apr 2025 01:04:44 GMT"
+=======
+          "Value": "Fri, 25 Apr 2025 02:09:05 GMT"
+>>>>>>> desenvolvimento
         },
         {
           "Name": "Vary",

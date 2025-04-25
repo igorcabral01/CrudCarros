@@ -1,0 +1,41 @@
+@model List<CrudCarros.Controllers.UsuarioComRolesViewModel>
+@{
+    ViewData["Title"] = "Usuários";
+}
+<h2 class="mb-4">Usuários do Sistema</h2>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Cargos</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var usuario in Model)
+        {
+            <tr>
+                <td>@usuario.Nome</td>
+                <td>@usuario.Email</td>
+                <td>@string.Join(", ", usuario.Roles)</td>
+                <td>
+                    @if (!usuario.Roles.Contains("Administrador"))
+                    {
+                        <form asp-action="PromoverParaAdmin" asp-controller="Admin" method="post" style="display:inline">
+                            <input type="hidden" name="id" value="@usuario.Id" />
+                            <button type="submit" class="btn btn-sm btn-success">Promover a Admin</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <form asp-action="RebaixarParaUsuario" asp-controller="Admin" method="post" style="display:inline">
+                            <input type="hidden" name="id" value="@usuario.Id" />
+                            <button type="submit" class="btn btn-sm btn-warning">Rebaixar para Usuário</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

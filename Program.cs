@@ -6,6 +6,7 @@ using FluentValidation;
 
 using CrudCarros.Services;
 using CrudCarros.Repositories;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,7 +28,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Configurando o Identity
-builder.Services.AddDefaultIdentity<Usuario>(options =>
+builder.Services.AddIdentity<Usuario, IdentityRole>(options =>
 {
     options.Password.RequireDigit = true;
     options.Password.RequiredLength = 6;
@@ -36,7 +37,8 @@ builder.Services.AddDefaultIdentity<Usuario>(options =>
     options.Password.RequireLowercase = true;
     options.SignIn.RequireConfirmedAccount = false;
 })
-.AddEntityFrameworkStores<ApplicationDbContext>();
+.AddEntityFrameworkStores<ApplicationDbContext>()
+.AddDefaultTokenProviders();
 
 // Ajuste para registrar classes concretas além de interfaces
 builder.Services.Scan(scan => scan
@@ -49,6 +51,7 @@ builder.Services.Scan(scan => scan
 builder.Services.AddMemoryCache();
 
 builder.Services.AddHttpClient<CepService>();
+builder.Services.AddSession();
 
 var app = builder.Build();
 
@@ -71,6 +74,7 @@ app.UseHttpsRedirection();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseSession();
 
 app.MapStaticAssets();
 
@@ -78,5 +82,30 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Login}/{id?}")
     .WithStaticAssets();
+
+// Seed de roles e admin
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<Usuario>>();
+    string[] roles = new[] { "Administrador", "Usuario" };
+    foreach (var role in roles)
+    {
+        if (!await roleManager.RoleExistsAsync(role))
+            await roleManager.CreateAsync(new IdentityRole(role));
+    }
+    // Cria um admin padrão se não existir
+    var adminEmail = "admin@admin.com";
+    var admin = await userManager.FindByEmailAsync(adminEmail);
+    if (admin == null)
+    {
+        admin = new Usuario { UserName = adminEmail, Email = adminEmail, Nome = "Administrador" };
+        var result = await userManager.CreateAsync(admin, "Admin123!");
+        if (result.Succeeded)
+        {
+            await userManager.AddToRoleAsync(admin, "Administrador");
+        }
+    }
+}
 
 app.Run();

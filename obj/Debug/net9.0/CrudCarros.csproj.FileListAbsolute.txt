@@ -1,9 +1,11 @@
+C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\xunit.abstractions.dll
 C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\appsettings.Development.json
 C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\appsettings.json
 C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\package-lock.json
 C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\package.json
 C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\CrudCarros.staticwebassets.runtime.json
 C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\CrudCarros.staticwebassets.endpoints.json
+C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\xunit.runner.visualstudio.testadapter.dll
 C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\CrudCarros.exe
 C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\CrudCarros.deps.json
 C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\CrudCarros.runtimeconfig.json
@@ -15,6 +17,9 @@ C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\FluentValidation.dll
 C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\FluentValidation.AspNetCore.dll
 C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\FluentValidation.DependencyInjectionExtensions.dll
 C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\Humanizer.dll
+C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\MediatR.dll
+C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\MediatR.Contracts.dll
+C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\MediatR.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\Microsoft.AspNetCore.Cryptography.Internal.dll
 C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
 C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
@@ -59,6 +64,8 @@ C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\Microsoft.OpenApi.dll
 C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\Microsoft.SqlServer.Server.dll
 C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\Microsoft.Win32.SystemEvents.dll
 C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\Mono.TextTemplating.dll
+C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\Newtonsoft.Json.dll
+C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\Scrutor.dll
 C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -79,6 +86,9 @@ C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\System.Security.Cryptography.
 C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\System.Security.Permissions.dll
 C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\System.Text.Json.dll
 C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\System.Windows.Extensions.dll
+C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\xunit.assert.dll
+C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\xunit.core.dll
+C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\xunit.execution.dotnet.dll
 C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.resources.dll
 C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.resources.dll
 C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.resources.dll
@@ -165,6 +175,7 @@ C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\CrudCarros.MvcApplicationPart
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\CrudCarros.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\CrudCarros.RazorAssemblyInfo.cache
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\CrudCarros.RazorAssemblyInfo.cs
+C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\CrudCarros.sourcelink.json
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\scopedcss\bundle\CrudCarros.styles.css
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\scopedcss\projectbundle\CrudCarros.bundle.scp.css
@@ -230,7 +241,9 @@ C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\a3ygkwa5zy-2z0ns9n
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\nezrqnk58p-muycvpuwrr.gz
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\v0zgfp0y55-87fc7y1x7t.gz
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\yfc7ypekbg-mlv21k5csn.gz
+C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\ia6b3kyyvc-q0ikdnttpe.gz
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\yb2rzwxrdi-61n19gt1b8.gz
+C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\1dvw6rfekl-l344kneadl.gz
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\y53pbs5y80-bqjiyaj88i.gz
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\88owme7awy-c2jlpeoesf.gz
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\hz6o27xsrh-erw9l3u2r3.gz
@@ -290,6 +303,8 @@ C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\d5dud4vsuq-2z0ns9n
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\skiv6jub47-muycvpuwrr.gz
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\d8nvln23p6-87fc7y1x7t.gz
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\nvah7spj6e-mlv21k5csn.gz
+C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\yhi846i3o9-qvhl3wd1wf.gz
+C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\xl84u09tb5-qvhl3wd1wf.gz
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\staticwebassets.build.json
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\staticwebassets.development.json
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\staticwebassets.build.endpoints.json
@@ -305,12 +320,3 @@ C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\refint\CrudCarros.dll
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\CrudCarros.pdb
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\CrudCarros.genruntimeconfig.cache
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\ref\CrudCarros.dll
-C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\MediatR.dll
-C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\MediatR.Contracts.dll
-C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\MediatR.Extensions.Microsoft.DependencyInjection.dll
-C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\CrudCarros.sourcelink.json
-C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\Scrutor.dll
-C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\yhi846i3o9-qvhl3wd1wf.gz
-C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\xl84u09tb5-qvhl3wd1wf.gz
-C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\ia6b3kyyvc-q0ikdnttpe.gz
-C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\1dvw6rfekl-l344kneadl.gz
