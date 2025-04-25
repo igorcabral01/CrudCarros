@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CrudCarros")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0c7e373e87b5cd8896995d63d73b44f7f73a70e6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+667999485e48aaa029dedef3165775e1d8af713b")]
 [assembly: System.Reflection.AssemblyProductAttribute("CrudCarros")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CrudCarros")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
