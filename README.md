@@ -9,6 +9,7 @@ Sistema completo para gestão de concessionárias, veículos, fabricantes, usuá
 - [Funcionalidades](#funcionalidades)
 - [Regras de Negócio](#regras-de-negócio)
 - [Estrutura do Projeto](#estrutura-do-projeto)
+- [Evidências](#evidências)
 
 ---
 
@@ -116,7 +117,11 @@ Validators/          # Validações (FluentValidation)
 Views/               # Views Razor (MVC)
 Migrations/          # Migrations do banco de dados
 wwwroot/             # Arquivos estáticos (CSS, JS, etc)
+Evidencias/          # Fotos do projeto funcionando
 ```
+
+## Evidências
+A pasta `Evidencias` contém imagens do sistema em funcionamento, demonstrando as principais telas e funcionalidades.
 
 ---
 
