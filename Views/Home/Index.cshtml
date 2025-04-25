@@ -37,6 +37,7 @@
     {
         <button id="btnCadastrarConcessionaria" class="btn btn-success me-2">Cadastrar Concessionária</button>
         <button id="btnCadastrarVeiculo" class="btn btn-warning me-2">Cadastrar Veículo</button>
+        <button id="btnCadastrarFabricante" class="btn btn-info me-2">Cadastrar Fabricante</button>
     }
     <button id="buscarCep" class="btn btn-secondary">Buscar CEP</button>
 </div>
@@ -203,137 +204,172 @@
             });
     }
 
-    document.addEventListener('DOMContentLoaded', carregarConcessionarias);
+    document.addEventListener('DOMContentLoaded', function() {
+        carregarConcessionarias();
 
-    // Modal de Concessionária
-    document.getElementById('btnCadastrarConcessionaria').addEventListener('click', function () {
-        const modal = new bootstrap.Modal(document.getElementById('modalConcessionaria'));
-        modal.show();
-    });
-
-    document.getElementById('formConcessionaria').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const data = {
-            nome: this.nome.value,
-            rua: this.rua.value,
-            cidade: this.cidade.value,
-            estado: this.estado.value,
-            cep: this.cep.value,
-            telefone: this.telefone.value,
-            email: this.email.value,
-            capacidadeMaximaVeiculos: parseInt(this.capacidadeMaximaVeiculos.value)
-        };
-        fetch('/api/Concessionaria', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        })
-        .then(r => r.ok ? r.json() : r.json().then(j => Promise.reject(j)))
-        .then(response => {
-            alert('Concessionária cadastrada com sucesso: ' + response.nome);
-            bootstrap.Modal.getInstance(document.getElementById('modalConcessionaria')).hide();
-            document.getElementById('formConcessionaria').reset();
-            setTimeout(carregarConcessionarias, 500);
-        })
-        .catch(xhr => {
-            alert('Erro ao cadastrar: ' + (xhr?.message || 'Verifique os campos.'));
+        // Modal de Concessionária
+        document.getElementById('btnCadastrarConcessionaria').addEventListener('click', function () {
+            const modal = new bootstrap.Modal(document.getElementById('modalConcessionaria'));
+            modal.show();
         });
-    });
 
-    document.getElementById('btnBuscarCepConcessionaria').addEventListener('click', function () {
-        const cep = document.getElementById('cepConcessionaria').value;
-        if (!cep) {
-            alert('Digite o CEP antes de buscar.');
-            return;
-        }
-        fetch(`/api/Cep/${cep}`)
+        document.getElementById('formConcessionaria').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const data = {
+                nome: this.nome.value,
+                rua: this.rua.value,
+                cidade: this.cidade.value,
+                estado: this.estado.value,
+                cep: this.cep.value,
+                telefone: this.telefone.value,
+                email: this.email.value,
+                capacidadeMaximaVeiculos: parseInt(this.capacidadeMaximaVeiculos.value)
+            };
+            fetch('/api/Concessionaria', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(r => r.ok ? r.json() : r.json().then(j => Promise.reject(j)))
             .then(response => {
-                if (!response.ok) throw new Error('CEP não encontrado');
-                return response.json();
+                alert('Concessionária cadastrada com sucesso: ' + response.nome);
+                bootstrap.Modal.getInstance(document.getElementById('modalConcessionaria')).hide();
+                document.getElementById('formConcessionaria').reset();
+                setTimeout(carregarConcessionarias, 500);
             })
-            .then(data => {
-                document.getElementById('ruaConcessionaria').value = data.street || data.logradouro || '';
-                document.getElementById('cidadeConcessionaria').value = data.city || data.localidade || '';
-                document.getElementById('estadoConcessionaria').value = data.state || data.uf || '';
-            })
-            .catch(() => {
-                alert('CEP não encontrado ou erro na busca.');
+            .catch(xhr => {
+                alert('Erro ao cadastrar: ' + (xhr?.message || 'Verifique os campos.'));
             });
-    });
-
-    // Modal de Veículo
-    document.getElementById('btnCadastrarVeiculo').addEventListener('click', function () {
-        const modal = new bootstrap.Modal(document.getElementById('modalVeiculo'));
-        modal.show();
-        // Carregar fabricantes
-        fetch('/api/Fabricante')
-            .then(response => response.json())
-            .then(fabricantes => {
-                const select = document.getElementById('fabricanteSelect');
-                select.innerHTML = '<option value="">Selecione um fabricante</option>';
-                if (!Array.isArray(fabricantes) || fabricantes.length === 0) {
-                    select.innerHTML += '<option value="">Nenhum fabricante cadastrado</option>';
-                } else {
-                    fabricantes.forEach(f => {
-                        select.innerHTML += `<option value="${f.fabricanteId}">${f.nome}</option>`;
-                    });
-                }
-            })
-            .catch(() => {
-                const select = document.getElementById('fabricanteSelect');
-                select.innerHTML = '<option value="">Erro ao carregar fabricantes</option>';
-            });
-    });
-
-    document.getElementById('formVeiculo').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const data = {
-            nome: this.nome.value,
-            anoFabricacao: parseInt(this.anoFabricacao.value),
-            preco: parseFloat(this.preco.value),
-            fabricanteId: parseInt(this.fabricanteId.value),
-            tipo: parseInt(this.tipo.value),
-            descricao: this.descricao.value
-        };
-        fetch('/api/Veiculo', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        })
-        .then(r => r.ok ? r.json() : r.json().then(j => Promise.reject(j)))
-        .then(response => {
-            alert('Veículo cadastrado com sucesso: ' + data.nome);
-            bootstrap.Modal.getInstance(document.getElementById('modalVeiculo')).hide();
-            document.getElementById('formVeiculo').reset();
-        })
-        .catch(xhr => {
-            alert('Erro ao cadastrar veículo: ' + (xhr?.message || 'Verifique os campos.'));
         });
-    });
 
-    // Modal de Listagem de Veículos
-    document.getElementById('btnVerVeiculos').addEventListener('click', function () {
-        const modal = new bootstrap.Modal(document.getElementById('modalListaVeiculos'));
-        modal.show();
-        const container = document.getElementById('tabelaVeiculosContainer');
-        container.innerHTML = '<div class="text-center text-muted">Carregando veículos...</div>';
-        fetch('/api/Veiculo')
-            .then(response => response.json())
-            .then(veiculos => {
-                if (!Array.isArray(veiculos) || veiculos.length === 0) {
-                    container.innerHTML = '<div class="text-center text-muted">Nenhum veículo cadastrado.</div>';
-                    return;
-                }
-                let html = `<div class='table-responsive'><table class='table table-striped'><thead><tr><th>Nome</th><th>Fabricante</th><th>Ano</th><th>Preço</th></tr></thead><tbody>`;
-                veiculos.forEach(v => {
-                  html += `<tr><td>${v.nome}</td><td>${v.fabricante && v.fabricante.nome ? v.fabricante.nome : '-'}</td><td>${v.anoFabricacao}</td><td>R$ ${v.preco.toLocaleString('pt-BR', {minimumFractionDigits:2})}</td></tr>`;
+        document.getElementById('btnBuscarCepConcessionaria').addEventListener('click', function () {
+            const cep = document.getElementById('cepConcessionaria').value;
+            if (!cep) {
+                alert('Digite o CEP antes de buscar.');
+                return;
+            }
+            fetch(`/api/Cep/${cep}`)
+                .then(response => {
+                    if (!response.ok) throw new Error('CEP não encontrado');
+                    return response.json();
+                })
+                .then(data => {
+                    document.getElementById('ruaConcessionaria').value = data.street || data.logradouro || '';
+                    document.getElementById('cidadeConcessionaria').value = data.city || data.localidade || '';
+                    document.getElementById('estadoConcessionaria').value = data.state || data.uf || '';
+                })
+                .catch(() => {
+                    alert('CEP não encontrado ou erro na busca.');
                 });
-                html += '</tbody></table></div>';
-                container.innerHTML = html;
+        });
+
+        // Modal de Veículo
+        document.getElementById('btnCadastrarVeiculo').addEventListener('click', function () {
+            const modal = new bootstrap.Modal(document.getElementById('modalVeiculo'));
+            modal.show();
+            // Carregar fabricantes
+            fetch('/api/Fabricante')
+                .then(response => response.json())
+                .then(fabricantes => {
+                    const select = document.getElementById('fabricanteSelect');
+                    select.innerHTML = '<option value="">Selecione um fabricante</option>';
+                    if (!Array.isArray(fabricantes) || fabricantes.length === 0) {
+                        select.innerHTML += '<option value="">Nenhum fabricante cadastrado</option>';
+                    } else {
+                        fabricantes.forEach(f => {
+                            select.innerHTML += `<option value="${f.fabricanteId}">${f.nome}</option>`;
+                        });
+                    }
+                })
+                .catch(() => {
+                    const select = document.getElementById('fabricanteSelect');
+                    select.innerHTML = '<option value="">Erro ao carregar fabricantes</option>';
+                });
+        });
+
+        document.getElementById('formVeiculo').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const data = {
+                nome: this.nome.value,
+                anoFabricacao: parseInt(this.anoFabricacao.value),
+                preco: parseFloat(this.preco.value),
+                fabricanteId: parseInt(this.fabricanteId.value),
+                tipo: parseInt(this.tipo.value),
+                descricao: this.descricao.value
+            };
+            fetch('/api/Veiculo', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
             })
-            .catch(() => {
-                container.innerHTML = '<div class="text-center text-danger">Erro ao carregar veículos.</div>';
+            .then(r => r.ok ? r.json() : r.json().then(j => Promise.reject(j)))
+            .then(response => {
+                alert('Veículo cadastrado com sucesso: ' + data.nome);
+                bootstrap.Modal.getInstance(document.getElementById('modalVeiculo')).hide();
+                document.getElementById('formVeiculo').reset();
+            })
+            .catch(xhr => {
+                alert('Erro ao cadastrar veículo: ' + (xhr?.message || 'Verifique os campos.'));
             });
+        });
+
+        // Modal de Listagem de Veículos
+        document.getElementById('btnVerVeiculos').addEventListener('click', function () {
+            const modal = new bootstrap.Modal(document.getElementById('modalListaVeiculos'));
+            modal.show();
+            const container = document.getElementById('tabelaVeiculosContainer');
+            container.innerHTML = '<div class="text-center text-muted">Carregando veículos...</div>';
+            fetch('/api/Veiculo')
+                .then(response => response.json())
+                .then(veiculos => {
+                    if (!Array.isArray(veiculos) || veiculos.length === 0) {
+                        container.innerHTML = '<div class="text-center text-muted">Nenhum veículo cadastrado.</div>';
+                        return;
+                    }
+                    let html = `<div class='table-responsive'><table class='table table-striped'><thead><tr><th>Nome</th><th>Fabricante</th><th>Ano</th><th>Preço</th></tr></thead><tbody>`;
+                    veiculos.forEach(v => {
+                      html += `<tr><td>${v.nome}</td><td>${v.fabricante && v.fabricante.nome ? v.fabricante.nome : '-'}</td><td>${v.anoFabricacao}</td><td>R$ ${v.preco.toLocaleString('pt-BR', {minimumFractionDigits:2})}</td></tr>`;
+                    });
+                    html += '</tbody></table></div>';
+                    container.innerHTML = html;
+                })
+                .catch(() => {
+                    container.innerHTML = '<div class="text-center text-danger">Erro ao carregar veículos.</div>';
+                });
+        });
+
+        // Modal de Fabricante
+        var btnFabricante = document.getElementById('btnCadastrarFabricante');
+        var formFabricante = document.getElementById('formFabricante');
+        if (btnFabricante && formFabricante) {
+            btnFabricante.addEventListener('click', function () {
+                const modal = new bootstrap.Modal(document.getElementById('modalFabricante'));
+                modal.show();
+            });
+            formFabricante.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const data = {
+                    nome: this.nome.value,
+                    paisDeOrigem: this.paisDeOrigem.value,
+                    anoDeFundacao: parseInt(this.anoDeFundacao.value),
+                    website: this.website.value
+                };
+                fetch('/api/Fabricante', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                })
+                .then(r => r.ok ? r.json() : r.json().then(j => Promise.reject(j)))
+                .then(response => {
+                    alert('Fabricante cadastrado com sucesso: ' + response.nome);
+                    bootstrap.Modal.getInstance(document.getElementById('modalFabricante')).hide();
+                    document.getElementById('formFabricante').reset();
+                })
+                .catch(xhr => {
+                    alert('Erro ao cadastrar fabricante: ' + (xhr?.message || 'Verifique os campos.'));
+                });
+            });
+        }
     });
     </script>
 }
