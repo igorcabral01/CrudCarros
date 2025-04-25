@@ -1,0 +1,48 @@
+@model IEnumerable<CrudCarros.Models.DbContext.Fabricante>
+@{
+    ViewData["Title"] = "Fabricantes";
+}
+<h2 class="text-center text-primary mb-4">Fabricantes</h2>
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <a href="/Fabricante/Inserir" class="btn btn-success mb-3 w-100">Novo Fabricante</a>
+    </div>
+    <div class="col-md-7">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>País</th>
+                    <th>Ano</th>
+                    <th>Website</th>
+                    <th style="width:120px">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var f in Model)
+                    {
+                        <tr>
+                            <td>@f.Nome</td>
+                            <td>@f.PaisDeOrigem</td>
+                            <td>@f.AnoDeFundacao</td>
+                            <td>@f.Website</td>
+                            <td>
+                                <a href="/Fabricante/Editar/@f.FabricanteId" class="btn btn-sm btn-primary">Editar</a>
+                                <form asp-action="Excluir" asp-controller="Fabricante" method="post" style="display:inline" onsubmit="return confirm('Deseja realmente excluir?');">
+                                    <input type="hidden" name="id" value="@f.FabricanteId" />
+                                    <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr><td colspan="5" class="text-center">Nenhum fabricante cadastrado.</td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
