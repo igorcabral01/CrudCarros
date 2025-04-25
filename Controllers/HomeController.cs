@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.AspNetCore.Http;
@@ -54,13 +55,17 @@ public class HomeController : Controller
     [HttpPost]
     public async Task<IActionResult> Login(string email, string password)
     {
-        var result = await _signInManager.PasswordSignInAsync(email, password, false, false);
-
+        var usuario = await _userManager.FindByEmailAsync(email);
+        if (usuario == null)
+        {
+            ViewBag.MensagemErro = "Usuário não encontrado.";
+            return View();
+        }
+        var result = await _signInManager.PasswordSignInAsync(usuario.UserName!, password, false, false);
         if (result.Succeeded)
         {
             return RedirectToAction("Index", "Home");
         }
-
         ViewBag.MensagemErro = "Credenciais inválidas.";
         return View();
     }
@@ -73,6 +78,8 @@ public class HomeController : Controller
 
         if (result.Succeeded)
         {
+            // Adiciona o usuário ao cargo 'Usuario' por padrão
+            await _userManager.AddToRoleAsync(usuario, "Usuario");
             await _signInManager.SignInAsync(usuario, isPersistent: false);
             return RedirectToAction("Index", "Home");
         }
@@ -85,5 +92,10 @@ public class HomeController : Controller
     {
         HttpContext.Session.Remove("UsuarioLogado");
         return RedirectToAction("Login", "Home");
+    }
+
+    public IActionResult AccessDenied()
+    {
+        return View();
     }
 }

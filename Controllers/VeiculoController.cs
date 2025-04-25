@@ -1,6 +1,7 @@
 using CrudCarros.Models;
 using CrudCarros.Models.DbContext;
 using CrudCarros.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 
@@ -8,6 +9,7 @@ namespace CrudCarros.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(Roles = "Administrador")]
     public class VeiculoController : ControllerBase
     {
         private readonly VeiculoService _veiculoService;

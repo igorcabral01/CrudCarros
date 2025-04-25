@@ -1,9 +1,11 @@
 using CrudCarros.Models;
 using CrudCarros.Services.Vendas;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CrudCarros.Controllers
 {
+    [Authorize(Roles = "Administrador,Vendedor")]
     public class VendaController : Controller
     {
         private readonly VendaService _vendaService;

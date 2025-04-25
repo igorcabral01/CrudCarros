@@ -9,14 +9,82 @@
         <input type="password" placeholder="Senha" name="password" required>
         <button type="submit">Entrar</button>
     </form>
+    <button type="button" class="btn btn-link mt-3" id="btnOpenRegisterModal">Registre-se</button>
 </div>
 
-<div class="register-container">
-    <h2>Registrar Novo Usuário</h2>
-    <form method="post" action="/Usuario/Register">
-        <input type="text" placeholder="Nome de Usuário" name="username" required>
-        <input type="email" placeholder="Email" name="email" required>
-        <input type="password" placeholder="Senha" name="password" required>
-        <button type="submit">Registrar</button>
-    </form>
+<!-- Modal de Registro -->
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content custom-modal">
+      <div class="modal-header border-0">
+        <h5 class="modal-title w-100 text-center" id="registerModalLabel">Registrar Novo Usuário</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      </div>
+      <div class="modal-body">
+        <form id="registerForm" method="post" action="/Home/Register">
+          <div class="mb-3">
+            <input type="text" class="form-control" name="nome" placeholder="Nome" required>
+          </div>
+          <div class="mb-3">
+            <input type="email" class="form-control" name="email" placeholder="Email" required>
+          </div>
+          <div class="mb-3">
+            <input type="password" class="form-control" name="password" placeholder="Senha" required>
+          </div>
+          <div class="d-grid">
+            <button type="submit" class="btn btn-primary">Registrar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
+
+@section Styles {
+<style>
+.login-container {
+    max-width: 350px;
+    margin: 60px auto 0 auto;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+    padding: 32px 28px 24px 28px;
+    text-align: center;
+}
+.login-container input {
+    margin-bottom: 12px;
+}
+.custom-modal {
+    border-radius: 16px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.12);
+    background: #f9f9f9;
+}
+.custom-modal .modal-header {
+    border-bottom: none;
+}
+.custom-modal .modal-title {
+    font-weight: 600;
+    color: #1b6ec2;
+}
+.custom-modal .form-control {
+    border-radius: 8px;
+    border: 1px solid #e3e6ea;
+    background: #fff;
+}
+.custom-modal .btn-primary {
+    border-radius: 8px;
+    background: #1b6ec2;
+    border: none;
+    font-weight: 500;
+}
+</style>
+}
+
+@section Scripts {
+<script>
+document.getElementById('btnOpenRegisterModal').addEventListener('click', function() {
+    var modal = new bootstrap.Modal(document.getElementById('registerModal'));
+    modal.show();
+});
+</script>
+}
