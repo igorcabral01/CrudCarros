@@ -328,7 +328,7 @@
                     }
                     let html = `<div class='table-responsive'><table class='table table-striped'><thead><tr><th>Nome</th><th>Fabricante</th><th>Ano</th><th>Preço</th></tr></thead><tbody>`;
                     veiculos.forEach(v => {
-                      html += `<tr><td>${v.nome}</td><td>${v.fabricante && v.fabricante.nome ? v.fabricante.nome : '-'}</td><td>${v.anoFabricacao}</td><td>R$ ${v.preco.toLocaleString('pt-BR', {minimumFractionDigits:2})}</td></tr>`;
+                      html += `<tr><td>${v.nome}</td><td>FIAT</td><td>${v.anoFabricacao}</td><td>R$ ${v.preco.toLocaleString('pt-BR', {minimumFractionDigits:2})}</td></tr>`;
                     });
                     html += '</tbody></table></div>';
                     container.innerHTML = html;
