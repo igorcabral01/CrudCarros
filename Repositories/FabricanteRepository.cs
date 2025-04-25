@@ -22,6 +22,10 @@ namespace CrudCarros.Repositories
         {
             return await _context.Fabricantes.FindAsync(id);
         }
+        public async Task<Fabricante?> ObterPorNome(string nome)
+        {
+            return await _context.Fabricantes.FindAsync(nome);
+        }
 
         public async Task Adicionar(Fabricante fabricante)
         {

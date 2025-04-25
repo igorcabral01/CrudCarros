@@ -6,7 +6,7 @@
     <div class="text-center">
         <h1 class="display-3 text-primary">Bem-vindo à AlianZ Veículos</h1>
         <p class="lead text-secondary">Encontre os melhores veículos com os melhores preços.</p>
-        <a href="/Veiculo" class="btn btn-primary btn-lg mt-3">Ver Veículos</a>
+        <button id="btnVerVeiculos" class="btn btn-primary btn-lg mt-3">Ver Veículos</button>
     </div>
 
     <div class="row mt-5">
@@ -28,18 +28,155 @@
     </div>
 </div>
 
+<div class="container mt-5 text-center">
+    <a href="/Venda/RealizarVenda" class="btn btn-primary me-2">Realizar Venda</a>
+    <button id="btnCadastrarConcessionaria" class="btn btn-success me-2">Cadastrar Concessionária</button>
+    <button id="btnCadastrarVeiculo" class="btn btn-warning me-2">Cadastrar Veículo</button>
+    <button id="buscarCep" class="btn btn-secondary">Buscar CEP</button>
+</div>
+
+<!-- Modal de cadastro de concessionária -->
+<div class="modal fade" id="modalConcessionaria" tabindex="-1" aria-labelledby="modalConcessionariaLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalConcessionariaLabel">Cadastrar Concessionária</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="formConcessionaria">
+          <div class="mb-2">
+            <label class="form-label">Nome</label>
+            <input type="text" class="form-control" name="nome" required>
+          </div>
+          <div class="mb-2 row g-2 align-items-end">
+            <div class="col-8">
+              <label class="form-label">CEP</label>
+              <input type="text" class="form-control" name="cep" id="cepConcessionaria" required>
+            </div>
+            <div class="col-4">
+              <button type="button" class="btn btn-outline-primary w-100" id="btnBuscarCepConcessionaria">Buscar</button>
+            </div>
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Rua</label>
+            <input type="text" class="form-control" name="rua" id="ruaConcessionaria" required>
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Cidade</label>
+            <input type="text" class="form-control" name="cidade" id="cidadeConcessionaria" required>
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Estado</label>
+            <input type="text" class="form-control" name="estado" id="estadoConcessionaria" required>
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Telefone</label>
+            <input type="text" class="form-control" name="telefone" required>
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" name="email" required>
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Capacidade Máxima de Veículos</label>
+            <input type="number" class="form-control" name="capacidadeMaximaVeiculos" required>
+          </div>
+          <div class="text-end">
+            <button type="submit" class="btn btn-success">Cadastrar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de cadastro de veículo -->
+<div class="modal fade" id="modalVeiculo" tabindex="-1" aria-labelledby="modalVeiculoLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalVeiculoLabel">Cadastrar Veículo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="formVeiculo">
+          <div class="mb-2">
+            <label class="form-label">Nome</label>
+            <input type="text" class="form-control" name="nome" required>
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Ano de Fabricação</label>
+            <input type="number" class="form-control" name="anoFabricacao" min="1900" required>
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Preço</label>
+            <input type="number" class="form-control" name="preco" step="0.01" min="0.01" required>
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Fabricante</label>
+            <select class="form-select" name="fabricanteId" id="fabricanteSelect" required>
+              <option value="">Selecione um fabricante</option>
+            </select>
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Tipo</label>
+            <select class="form-select" name="tipo" required>
+              <option value="0">Carro</option>
+              <option value="1">Moto</option>
+              <option value="2">Caminhao</option>
+            </select>
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Descrição</label>
+            <textarea class="form-control" name="descricao" maxlength="500"></textarea>
+          </div>
+          <div class="text-end">
+            <button type="submit" class="btn btn-success">Cadastrar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de listagem de veículos -->
+<div class="modal fade" id="modalListaVeiculos" tabindex="-1" aria-labelledby="modalListaVeiculosLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalListaVeiculosLabel">Veículos Cadastrados</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div id="tabelaVeiculosContainer">
+          <div class="text-center text-muted">Carregando veículos...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 @section Scripts {
     <script>
-        document.addEventListener('DOMContentLoaded', async () => {
-            const response = await fetch('/api/Concessionaria');
-            if (response.ok) {
-                const concessionarias = await response.json();
+    function carregarConcessionarias() {
+        fetch('/api/Concessionaria')
+            .then(response => {
+                if (!response.ok) throw new Error('Erro ao buscar concessionárias');
+                return response.json();
+            })
+            .then(concessionarias => {
                 const container = document.querySelector('#concessionarias-container');
+                container.innerHTML = '';
+                if (!Array.isArray(concessionarias) || concessionarias.length === 0) {
+                    container.innerHTML = '<div class="col-12 text-center text-muted">Nenhuma concessionária encontrada.</div>';
+                    return;
+                }
                 concessionarias.forEach(concessionaria => {
                     const card = document.createElement('div');
-                    card.className = 'col-md-4';
+                    card.className = 'col-md-4 mb-3';
                     card.innerHTML = `
-                        <div class="card shadow-sm">
+                        <div class="card shadow-sm h-100">
                             <div class="card-body">
                                 <h5 class="card-title">${concessionaria.nome}</h5>
                                 <p class="card-text">Localização: ${concessionaria.cidade}, ${concessionaria.estado}</p>
@@ -49,9 +186,144 @@
                     `;
                     container.appendChild(card);
                 });
-            } else {
-                console.error('Erro ao buscar concessionárias:', response.statusText);
-            }
+            })
+            .catch(error => {
+                const container = document.querySelector('#concessionarias-container');
+                container.innerHTML = `<div class="col-12 text-center text-danger">Erro ao carregar concessionárias: ${error.message}</div>`;
+            });
+    }
+
+    document.addEventListener('DOMContentLoaded', carregarConcessionarias);
+
+    // Modal de Concessionária
+    document.getElementById('btnCadastrarConcessionaria').addEventListener('click', function () {
+        const modal = new bootstrap.Modal(document.getElementById('modalConcessionaria'));
+        modal.show();
+    });
+
+    document.getElementById('formConcessionaria').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const data = {
+            nome: this.nome.value,
+            rua: this.rua.value,
+            cidade: this.cidade.value,
+            estado: this.estado.value,
+            cep: this.cep.value,
+            telefone: this.telefone.value,
+            email: this.email.value,
+            capacidadeMaximaVeiculos: parseInt(this.capacidadeMaximaVeiculos.value)
+        };
+        fetch('/api/Concessionaria', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then(r => r.ok ? r.json() : r.json().then(j => Promise.reject(j)))
+        .then(response => {
+            alert('Concessionária cadastrada com sucesso: ' + response.nome);
+            bootstrap.Modal.getInstance(document.getElementById('modalConcessionaria')).hide();
+            document.getElementById('formConcessionaria').reset();
+            setTimeout(carregarConcessionarias, 500);
+        })
+        .catch(xhr => {
+            alert('Erro ao cadastrar: ' + (xhr?.message || 'Verifique os campos.'));
         });
+    });
+
+    document.getElementById('btnBuscarCepConcessionaria').addEventListener('click', function () {
+        const cep = document.getElementById('cepConcessionaria').value;
+        if (!cep) {
+            alert('Digite o CEP antes de buscar.');
+            return;
+        }
+        fetch(`/api/Cep/${cep}`)
+            .then(response => {
+                if (!response.ok) throw new Error('CEP não encontrado');
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById('ruaConcessionaria').value = data.street || data.logradouro || '';
+                document.getElementById('cidadeConcessionaria').value = data.city || data.localidade || '';
+                document.getElementById('estadoConcessionaria').value = data.state || data.uf || '';
+            })
+            .catch(() => {
+                alert('CEP não encontrado ou erro na busca.');
+            });
+    });
+
+    // Modal de Veículo
+    document.getElementById('btnCadastrarVeiculo').addEventListener('click', function () {
+        const modal = new bootstrap.Modal(document.getElementById('modalVeiculo'));
+        modal.show();
+        // Carregar fabricantes
+        fetch('/api/Fabricante')
+            .then(response => response.json())
+            .then(fabricantes => {
+                const select = document.getElementById('fabricanteSelect');
+                select.innerHTML = '<option value="">Selecione um fabricante</option>';
+                if (!Array.isArray(fabricantes) || fabricantes.length === 0) {
+                    select.innerHTML += '<option value="">Nenhum fabricante cadastrado</option>';
+                } else {
+                    fabricantes.forEach(f => {
+                        select.innerHTML += `<option value="${f.fabricanteId}">${f.nome}</option>`;
+                    });
+                }
+            })
+            .catch(() => {
+                const select = document.getElementById('fabricanteSelect');
+                select.innerHTML = '<option value="">Erro ao carregar fabricantes</option>';
+            });
+    });
+
+    document.getElementById('formVeiculo').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const data = {
+            nome: this.nome.value,
+            anoFabricacao: parseInt(this.anoFabricacao.value),
+            preco: parseFloat(this.preco.value),
+            fabricanteId: parseInt(this.fabricanteId.value),
+            tipo: parseInt(this.tipo.value),
+            descricao: this.descricao.value
+        };
+        fetch('/api/Veiculo', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then(r => r.ok ? r.json() : r.json().then(j => Promise.reject(j)))
+        .then(response => {
+            alert('Veículo cadastrado com sucesso: ' + data.nome);
+            bootstrap.Modal.getInstance(document.getElementById('modalVeiculo')).hide();
+            document.getElementById('formVeiculo').reset();
+        })
+        .catch(xhr => {
+            alert('Erro ao cadastrar veículo: ' + (xhr?.message || 'Verifique os campos.'));
+        });
+    });
+
+    // Modal de Listagem de Veículos
+    document.getElementById('btnVerVeiculos').addEventListener('click', function () {
+        const modal = new bootstrap.Modal(document.getElementById('modalListaVeiculos'));
+        modal.show();
+        const container = document.getElementById('tabelaVeiculosContainer');
+        container.innerHTML = '<div class="text-center text-muted">Carregando veículos...</div>';
+        fetch('/api/Veiculo')
+            .then(response => response.json())
+            .then(veiculos => {
+                if (!Array.isArray(veiculos) || veiculos.length === 0) {
+                    container.innerHTML = '<div class="text-center text-muted">Nenhum veículo cadastrado.</div>';
+                    return;
+                }
+                let html = `<div class='table-responsive'><table class='table table-striped'><thead><tr><th>Nome</th><th>Fabricante</th><th>Ano</th><th>Preço</th></tr></thead><tbody>`;
+                veiculos.forEach(v => {
+                  html += `<tr><td>${v.nome}</td><td>${v.fabricante && v.fabricante.nome ? v.fabricante.nome : '-'}</td><td>${v.anoFabricacao}</td><td>R$ ${v.preco.toLocaleString('pt-BR', {minimumFractionDigits:2})}</td></tr>`;
+                });
+                html += '</tbody></table></div>';
+                container.innerHTML = html;
+            })
+            .catch(() => {
+                container.innerHTML = '<div class="text-center text-danger">Erro ao carregar veículos.</div>';
+            });
+    });
     </script>
 }

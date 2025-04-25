@@ -15,7 +15,9 @@ namespace CrudCarros.Repositories
 
         public async Task<IEnumerable<Veiculo>> ObterTodos()
         {
-            return await _context.Veiculos.ToListAsync();
+            return await _context.Veiculos
+                .Include(v => v.Fabricante)
+                .ToListAsync();
         }
 
         public async Task<Veiculo?> ObterPorId(Guid id)
@@ -43,6 +45,13 @@ namespace CrudCarros.Repositories
                 _context.Veiculos.Remove(veiculo);
                 await _context.SaveChangesAsync();
             }
+        }
+        
+          public async Task<IEnumerable<Veiculo>> BuscarPorFabricanteEModeloAsync(string fabricante, string modelo)
+        {
+            return await Task.FromResult(_context.Veiculos
+                .Where(v => v.Fabricante!.Nome!.Contains(fabricante) && v.Nome!.Contains(modelo))
+                .ToList());
         }
     }
 }

@@ -48,6 +48,8 @@ builder.Services.Scan(scan => scan
 // Adicionando o serviço de MemoryCache
 builder.Services.AddMemoryCache();
 
+builder.Services.AddHttpClient<CepService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

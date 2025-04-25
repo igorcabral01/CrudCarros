@@ -1,4 +1,5 @@
 using CrudCarros.Models;
+using CrudCarros.Models.DbContext;
 using Microsoft.EntityFrameworkCore;
 
 namespace CrudCarros.Repositories
@@ -42,6 +43,20 @@ namespace CrudCarros.Repositories
                 _context.Concessionarias.Remove(concessionaria);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<IEnumerable<Concessionaria>> BuscarPorNomeOuLocalizacaoAsync(string termo)
+        {
+            return await _context.Concessionarias
+                .Where(c => c.Nome!.Contains(termo) || c.CEP!.Contains(termo))
+                .ToListAsync();
+        }
+
+         public async Task<IEnumerable<Fabricante>> BuscarPorNomeAsync(string termo)
+        {
+            return await _context.Fabricantes
+                .Where(f => f.Nome!.Contains(termo))
+                .ToListAsync();
         }
     }
 }

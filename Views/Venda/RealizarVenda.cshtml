@@ -1,0 +1,132 @@
+@{
+    ViewData["Title"] = "Realizar Venda";
+}
+
+<h2 class="text-center text-primary mb-4">Realizar Venda</h2>
+
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <form id="formVenda" class="p-4 rounded shadow bg-white venda-form">
+            <div class="mb-3">
+                <label for="concessionaria" class="form-label">Concessionária</label>
+                <select class="form-select" id="concessionaria" name="concessionaria" required>
+                    <option value="">Selecione uma concessionária</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="fabricante" class="form-label">Fabricante</label>
+                <input type="text" class="form-control" id="fabricante" name="fabricante" placeholder="Digite o nome">
+            </div>
+            <div class="mb-3">
+                <label for="veiculo" class="form-label">Veículo</label>
+                <select class="form-select" id="veiculo" name="veiculo">
+                    <option value="">Selecione um veículo</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="clienteNome" class="form-label">Nome do Cliente</label>
+                <input type="text" class="form-control" id="clienteNome" name="clienteNome" required>
+            </div>
+            <div class="mb-3">
+                <label for="clienteCpf" class="form-label">CPF</label>
+                <input type="text" class="form-control" id="clienteCpf" name="clienteCpf" required>
+            </div>
+            <div class="mb-3">
+                <label for="clienteTelefone" class="form-label">Telefone</label>
+                <input type="text" class="form-control" id="clienteTelefone" name="clienteTelefone" required>
+            </div>
+            <div class="mb-3">
+                <label for="dataVenda" class="form-label">Data da Venda</label>
+                <input type="date" class="form-control" id="dataVenda" name="dataVenda" required>
+            </div>
+            <div class="mb-3">
+                <label for="precoVenda" class="form-label">Preço de Venda</label>
+                <input type="number" class="form-control" id="precoVenda" name="precoVenda" required>
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-success btn-lg">Realizar Venda</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        .venda-form {
+            background: #f8f9fa;
+            border: 1px solid #e3e6ea;
+        }
+        .venda-form label {
+            font-weight: 500;
+        }
+        .venda-form input:focus, .venda-form select:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.2rem rgba(13,110,253,.15);
+        }
+    </style>
+}
+
+<script>
+    $(document).ready(function () {
+        // Carregar concessionárias no dropdown ao abrir a página (igual à tela inicial)
+        fetch('/api/Concessionaria')
+            .then(response => response.json())
+            .then(concessionarias => {
+                const select = document.getElementById('concessionaria');
+                select.innerHTML = '<option value="">Selecione uma concessionária</option>';
+                concessionarias.forEach(function (c) {
+                    select.innerHTML += `<option value="${c.concessionariaId}">${c.nome}</option>`;
+                });
+            });
+
+        // Carregar veículos no dropdown ao abrir a página
+        fetch('/api/Veiculo')
+            .then(response => response.json())
+            .then(veiculos => {
+                const veiculoSelect = document.getElementById('veiculo');
+                veiculoSelect.innerHTML = '<option value="">Selecione um veículo</option>';
+                veiculos.forEach(function (v) {
+                    let nome = v.nome || v.modelo || 'Sem nome';
+                    let fabricante = v.fabricante && v.fabricante.nome ? v.fabricante.nome : '';
+                    veiculoSelect.innerHTML += `<option value="${v.veiculoId}">${nome} ${fabricante ? '- ' + fabricante : ''} (${v.anoFabricacao})</option>`;
+                });
+            });
+
+        $('#fabricante').on('input', function () {
+            const fabricante = $(this).val();
+            if (fabricante) {
+                $.get(`/Venda/Veiculos?fabricante=${fabricante}`, function (data) {
+                    const veiculoSelect = $('#veiculo');
+                    veiculoSelect.empty();
+                    veiculoSelect.append('<option value="">Selecione um veículo</option>');
+                    data.forEach(veiculo => {
+                        veiculoSelect.append(`<option value="${veiculo.id}">${veiculo.modelo}</option>`);
+                    });
+                });
+            } else {
+                // Se o campo fabricante for limpo, recarrega todos os veículos
+                fetch('/api/Veiculo')
+                    .then(response => response.json())
+                    .then(veiculos => {
+                        const veiculoSelect = document.getElementById('veiculo');
+                        veiculoSelect.innerHTML = '<option value="">Selecione um veículo</option>';
+                        veiculos.forEach(function (v) {
+                            let nome = v.nome || v.modelo || 'Sem nome';
+                            let fabricante = v.fabricante && v.fabricante.nome ? v.fabricante.nome : '';
+                            veiculoSelect.innerHTML += `<option value="${v.veiculoId}">${nome} ${fabricante ? '- ' + fabricante : ''} (${v.anoFabricacao})</option>`;
+                        });
+                    });
+            }
+        });
+
+        $('#formVenda').on('submit', function (e) {
+            e.preventDefault();
+            const formData = $(this).serialize();
+            $.post('/Venda/RealizarVenda', formData, function (response) {
+                alert(`Venda realizada com sucesso! Protocolo: ${response.Protocolo}`);
+            }).fail(function (error) {
+                alert(`Erro ao realizar venda: ${error.responseJSON.Erro}`);
+            });
+        });
+    });
+</script>

@@ -1,86 +1,57 @@
 using CrudCarros.Models;
-using CrudCarros.Services;
+using CrudCarros.Services.Vendas;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
 
 namespace CrudCarros.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class VendaController : ControllerBase
+    public class VendaController : Controller
     {
         private readonly VendaService _vendaService;
-        private readonly IMemoryCache _memoryCache;
 
-        public VendaController(VendaService vendaService, IMemoryCache memoryCache)
+        public VendaController(VendaService vendaService)
         {
             _vendaService = vendaService;
-            _memoryCache = memoryCache;
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> ObterTodos()
-        {
-            string cacheKey = "Vendas";
-            if (!_memoryCache.TryGetValue(cacheKey, out IEnumerable<Venda>? vendas))
-            {
-                vendas = await _vendaService.ObterTodos();
-                var cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(5));
-                _memoryCache.Set(cacheKey, vendas, cacheEntryOptions);
-            }
-            return Ok(vendas);
-        }
-
-        [HttpGet("{id}")]
-        public IActionResult ObterPorId(Guid id)
-        {
-            var venda = _vendaService.ObterPorId(id);
-            if (venda == null)
-            {
-                return NotFound();
-            }
-            return Ok(venda);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Inserir([FromBody] Venda venda)
+        public async Task<IActionResult> RealizarVenda([FromBody] Venda venda)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
+                var protocolo = await _vendaService.RealizarVendaAsync(venda);
+                return Ok(new { Protocolo = protocolo });
             }
-            await _vendaService.Inserir(venda);
-            return Ok(venda.VendaId);
+            catch (Exception ex)
+            {
+                return BadRequest(new { Erro = ex.Message });
+            }
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Atualizar(Guid id, [FromBody] Venda venda)
+        [HttpGet("Concessionarias")]
+        public async Task<IActionResult> BuscarConcessionarias(string termo)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != venda.VendaId)
-            {
-                return BadRequest("ID mismatch.");
-            }
-
-            await _vendaService.Atualizar(venda);
-            return NoContent();
+            var concessionarias = await _vendaService.BuscarConcessionariasAsync(termo);
+            return Ok(concessionarias);
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Excluir(Guid id)
-        {
-            var venda = _vendaService.ObterPorId(id);
-            if (venda == null)
-            {
-                return NotFound();
-            }
+        // [HttpGet("Fabricantes")]
+        // public async Task<IActionResult> BuscarFabricantes(string termo)
+        // {
+        //     var fabricantes = await _vendaService.BuscarFabricantesAsync(termo);
+        //     return Ok(fabricantes);
+        // }
 
-            await _vendaService.Excluir(id);
-            return NoContent();
+        [HttpGet("Veiculos")]
+        public async Task<IActionResult> BuscarVeiculos(string fabricante, string modelo)
+        {
+            var veiculos = await _vendaService.BuscarVeiculosAsync(fabricante, modelo);
+            return Ok(veiculos);
+        }
+
+        [HttpGet()]
+        public IActionResult RealizarVenda()
+        {
+            return View();
         }
     }
 }

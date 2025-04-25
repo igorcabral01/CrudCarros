@@ -231,7 +231,6 @@ C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\nezrqnk58p-muycvpu
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\v0zgfp0y55-87fc7y1x7t.gz
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\yfc7ypekbg-mlv21k5csn.gz
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\yb2rzwxrdi-61n19gt1b8.gz
-C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\1dvw6rfekl-xtxxf3hu2r.gz
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\y53pbs5y80-bqjiyaj88i.gz
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\88owme7awy-c2jlpeoesf.gz
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\hz6o27xsrh-erw9l3u2r3.gz
@@ -314,3 +313,4 @@ C:\Users\Igorc\Desktop\CrudCarros\bin\Debug\net9.0\Scrutor.dll
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\yhi846i3o9-qvhl3wd1wf.gz
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\xl84u09tb5-qvhl3wd1wf.gz
 C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\ia6b3kyyvc-q0ikdnttpe.gz
+C:\Users\Igorc\Desktop\CrudCarros\obj\Debug\net9.0\compressed\1dvw6rfekl-l344kneadl.gz
