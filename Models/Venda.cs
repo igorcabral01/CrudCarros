@@ -9,15 +9,15 @@ namespace CrudCarros.Models
         public Guid VendaId { get; set; }
 
         [Required]
-        public int ConcessionariaId { get; set; }
+        public Guid ConcessionariaId { get; set; }
         public Concessionaria? Concessionaria { get; set; }
 
         [Required]
-        public int FabricanteId { get; set; }
+        public Guid FabricanteId { get; set; }
         public Fabricante? Fabricante { get; set; }
 
         [Required]
-        public int VeiculoId { get; set; }
+        public Guid VeiculoId { get; set; }
         public Veiculo? veiculo { get; set; }
 
         [Required]

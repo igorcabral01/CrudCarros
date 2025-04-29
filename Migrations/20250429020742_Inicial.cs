@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CrudCarros.Migrations
 {
     /// <inheritdoc />
-    public partial class inicio : Migration
+    public partial class Inicial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,6 +30,8 @@ namespace CrudCarros.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Discriminator = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
+                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -51,20 +53,37 @@ namespace CrudCarros.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Usuarios",
+                name: "Concessionarias",
                 columns: table => new
                 {
-                    UsuarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Senha = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TipoUsuario = table.Column<int>(type: "int", nullable: false),
-                    DataCadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataAtualizacao = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ConcessionariaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Nome = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Rua = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Cidade = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Estado = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CEP = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Telefone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CapacidadeMaximaVeiculos = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Usuarios", x => x.UsuarioId);
+                    table.PrimaryKey("PK_Concessionarias", x => x.ConcessionariaId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Fabricantes",
+                columns: table => new
+                {
+                    FabricanteId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Nome = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    PaisDeOrigem = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    AnoDeFundacao = table.Column<int>(type: "int", nullable: false),
+                    Website = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Fabricantes", x => x.FabricanteId);
                 });
 
             migrationBuilder.CreateTable(
@@ -113,8 +132,8 @@ namespace CrudCarros.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -158,8 +177,8 @@ namespace CrudCarros.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -171,6 +190,68 @@ namespace CrudCarros.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Veiculos",
+                columns: table => new
+                {
+                    VeiculoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Nome = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    AnoFabricacao = table.Column<int>(type: "int", nullable: false),
+                    Preco = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    FabricanteId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Tipo = table.Column<int>(type: "int", nullable: false),
+                    Descricao = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    Ativo = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Veiculos", x => x.VeiculoId);
+                    table.ForeignKey(
+                        name: "FK_Veiculos_Fabricantes_FabricanteId",
+                        column: x => x.FabricanteId,
+                        principalTable: "Fabricantes",
+                        principalColumn: "FabricanteId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Vendas",
+                columns: table => new
+                {
+                    VendaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ConcessionariaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FabricanteId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    VeiculoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ClienteNome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ClienteCPF = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ClienteTelefone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DataVenda = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PrecoVenda = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    NumeroProtocolo = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Vendas", x => x.VendaId);
+                    table.ForeignKey(
+                        name: "FK_Vendas_Concessionarias_ConcessionariaId",
+                        column: x => x.ConcessionariaId,
+                        principalTable: "Concessionarias",
+                        principalColumn: "ConcessionariaId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Vendas_Fabricantes_FabricanteId",
+                        column: x => x.FabricanteId,
+                        principalTable: "Fabricantes",
+                        principalColumn: "FabricanteId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Vendas_Veiculos_VeiculoId",
+                        column: x => x.VeiculoId,
+                        principalTable: "Veiculos",
+                        principalColumn: "VeiculoId",
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(
@@ -211,6 +292,26 @@ namespace CrudCarros.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Veiculos_FabricanteId",
+                table: "Veiculos",
+                column: "FabricanteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vendas_ConcessionariaId",
+                table: "Vendas",
+                column: "ConcessionariaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vendas_FabricanteId",
+                table: "Vendas",
+                column: "FabricanteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vendas_VeiculoId",
+                table: "Vendas",
+                column: "VeiculoId");
         }
 
         /// <inheritdoc />
@@ -232,13 +333,22 @@ namespace CrudCarros.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Usuarios");
+                name: "Vendas");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Concessionarias");
+
+            migrationBuilder.DropTable(
+                name: "Veiculos");
+
+            migrationBuilder.DropTable(
+                name: "Fabricantes");
         }
     }
 }

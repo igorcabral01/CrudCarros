@@ -15,7 +15,7 @@ namespace CrudCarros.Tests
                 Nome = "Corolla",
                 AnoFabricacao = 2020,
                 Preco = 90000,
-                FabricanteId = 1,
+                FabricanteId = Guid.NewGuid(),
                 Tipo = TipoVeiculo.Carro,
                 Descricao = "Sedan completo."
             };
@@ -32,7 +32,7 @@ namespace CrudCarros.Tests
                 Nome = "Corolla",
                 AnoFabricacao = 2020,
                 Preco = -1,
-                FabricanteId = 1,
+                FabricanteId = Guid.NewGuid(),
                 Tipo = TipoVeiculo.Carro
             };
             var validator = new VeiculoValidator();

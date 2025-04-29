@@ -101,14 +101,14 @@ namespace CrudCarros.Migrations
                     b.Property<int>("AnoFabricacao")
                         .HasColumnType("int");
 
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Descricao")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<int>("FabricanteId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("FabricanteId1")
+                    b.Property<Guid>("FabricanteId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Nome")
@@ -124,7 +124,7 @@ namespace CrudCarros.Migrations
 
                     b.HasKey("VeiculoId");
 
-                    b.HasIndex("FabricanteId1");
+                    b.HasIndex("FabricanteId");
 
                     b.ToTable("Veiculos");
                 });
@@ -147,19 +147,13 @@ namespace CrudCarros.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ConcessionariaId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("ConcessionariaId1")
+                    b.Property<Guid>("ConcessionariaId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DataVenda")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("FabricanteId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("FabricanteId1")
+                    b.Property<Guid>("FabricanteId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("NumeroProtocolo")
@@ -169,19 +163,16 @@ namespace CrudCarros.Migrations
                     b.Property<decimal>("PrecoVenda")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("VeiculoId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("VeiculoId1")
+                    b.Property<Guid>("VeiculoId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("VendaId");
 
-                    b.HasIndex("ConcessionariaId1");
+                    b.HasIndex("ConcessionariaId");
 
-                    b.HasIndex("FabricanteId1");
+                    b.HasIndex("FabricanteId");
 
-                    b.HasIndex("VeiculoId1");
+                    b.HasIndex("VeiculoId");
 
                     b.ToTable("Vendas");
                 });
@@ -340,12 +331,10 @@ namespace CrudCarros.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -382,12 +371,10 @@ namespace CrudCarros.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -411,7 +398,9 @@ namespace CrudCarros.Migrations
                 {
                     b.HasOne("CrudCarros.Models.DbContext.Fabricante", "Fabricante")
                         .WithMany()
-                        .HasForeignKey("FabricanteId1");
+                        .HasForeignKey("FabricanteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Fabricante");
                 });
@@ -420,15 +409,21 @@ namespace CrudCarros.Migrations
                 {
                     b.HasOne("CrudCarros.Models.Concessionaria", "Concessionaria")
                         .WithMany()
-                        .HasForeignKey("ConcessionariaId1");
+                        .HasForeignKey("ConcessionariaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("CrudCarros.Models.DbContext.Fabricante", "Fabricante")
                         .WithMany()
-                        .HasForeignKey("FabricanteId1");
+                        .HasForeignKey("FabricanteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("CrudCarros.Models.DbContext.Veiculo", "veiculo")
                         .WithMany()
-                        .HasForeignKey("VeiculoId1");
+                        .HasForeignKey("VeiculoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Concessionaria");
 

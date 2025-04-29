@@ -6,6 +6,9 @@ namespace CrudCarros.Services.Concessionarias
 {
     public class ConcessionariaDto
     {
+        [Key]
+        public Guid ConcessionariaId { get; set; }
+
         [Required]
         [MaxLength(100)]
         public string? Nome { get; set; }

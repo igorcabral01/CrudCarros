@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CrudCarros.Controllers
 {
-    [Authorize(Roles = "Administrador,Vendedor")]
+    [Route("Venda")]
     public class VendaController : Controller
     {
         private readonly VendaService _vendaService;
@@ -15,7 +15,7 @@ namespace CrudCarros.Controllers
             _vendaService = vendaService;
         }
 
-        [HttpPost]
+        [HttpPost("RealizarVenda")]
         public async Task<IActionResult> RealizarVenda([FromBody] Venda venda)
         {
             try
@@ -50,7 +50,16 @@ namespace CrudCarros.Controllers
             return Ok(veiculos);
         }
 
-        [HttpGet()]
+        [HttpGet("VeiculosPorFabricante")]
+        public async Task<IActionResult> VeiculosPorFabricante(string fabricanteId)
+        {
+            if (string.IsNullOrEmpty(fabricanteId) || !Guid.TryParse(fabricanteId, out var guid))
+                return BadRequest(new { Erro = "FabricanteId inválido." });
+            var veiculos = await _vendaService.BuscarVeiculosPorFabricanteAsync(guid);
+            return Ok(veiculos);
+        }
+
+        [HttpGet("RealizarVenda")]
         public IActionResult RealizarVenda()
         {
             return View();

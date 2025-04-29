@@ -127,6 +127,12 @@
             </select>
           </div>
           <div class="mb-2">
+            <label class="form-label">Concessionária</label>
+            <select class="form-select" name="concessionariaId" id="concessionariaSelect" required>
+              <option value="">Selecione uma concessionária</option>
+            </select>
+          </div>
+          <div class="mb-2">
             <label class="form-label">Tipo</label>
             <select class="form-select" name="tipo" required>
               <option value="0">Carro</option>
@@ -268,7 +274,7 @@
             const modal = new bootstrap.Modal(document.getElementById('modalVeiculo'));
             modal.show();
             // Carregar fabricantes
-            fetch('/api/Fabricante')
+            fetch('/Fabricante')
                 .then(response => response.json())
                 .then(fabricantes => {
                     const select = document.getElementById('fabricanteSelect');
@@ -285,6 +291,24 @@
                     const select = document.getElementById('fabricanteSelect');
                     select.innerHTML = '<option value="">Erro ao carregar fabricantes</option>';
                 });
+            // Carregar concessionárias
+            fetch('/api/Concessionaria')
+                .then(response => response.json())
+                .then(concessionarias => {
+                    const select = document.getElementById('concessionariaSelect');
+                    select.innerHTML = '<option value="">Selecione uma concessionária</option>';
+                    if (!Array.isArray(concessionarias) || concessionarias.length === 0) {
+                        select.innerHTML += '<option value="">Nenhuma concessionária cadastrada</option>';
+                    } else {
+                        concessionarias.forEach(c => {
+                            select.innerHTML += `<option value="${c.concessionariaId}">${c.nome}</option>`;
+                        });
+                    }
+                })
+                .catch(() => {
+                    const select = document.getElementById('concessionariaSelect');
+                    select.innerHTML = '<option value="">Erro ao carregar concessionárias</option>';
+                });
         });
 
         document.getElementById('formVeiculo').addEventListener('submit', function(e) {
@@ -293,7 +317,8 @@
                 nome: this.nome.value,
                 anoFabricacao: parseInt(this.anoFabricacao.value),
                 preco: parseFloat(this.preco.value),
-                fabricanteId: parseInt(this.fabricanteId.value),
+                fabricanteId: this.fabricanteId.value,
+                concessionariaId: this.concessionariaId.value,
                 tipo: parseInt(this.tipo.value),
                 descricao: this.descricao.value
             };

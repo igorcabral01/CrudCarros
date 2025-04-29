@@ -20,7 +20,7 @@ namespace CrudCarros.Models.DbContext
         public decimal Preco { get; set; }
 
         [Required]
-        public int FabricanteId { get; set; }
+        public Guid FabricanteId { get; set; }
         public Fabricante? Fabricante { get; set; }
 
         [Required]
@@ -28,6 +28,9 @@ namespace CrudCarros.Models.DbContext
 
         [MaxLength(500)]
         public string? Descricao { get; set; }
+
+        // Indica se o veículo está disponível para venda
+        public bool Ativo { get; set; } = true;
     }
 
     public enum TipoVeiculo

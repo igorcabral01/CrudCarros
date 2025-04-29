@@ -6,16 +6,18 @@
 
 <div class="row justify-content-center">
     <div class="col-md-8 col-lg-6">
-        <form id="formVenda" class="p-4 rounded shadow bg-white venda-form">
+        <div id="listaConcessionarias" class="mb-4"></div>
+        <form id="formVenda" class="p-4 rounded shadow bg-white venda-form" style="display:none;">
             <div class="mb-3">
                 <label for="concessionaria" class="form-label">Concessionária</label>
-                <select class="form-select" id="concessionaria" name="concessionaria" required>
-                    <option value="">Selecione uma concessionária</option>
-                </select>
+                <input type="text" class="form-control" id="concessionariaNome" readonly>
+                <input type="hidden" id="concessionaria" name="concessionaria" required>
             </div>
             <div class="mb-3">
                 <label for="fabricante" class="form-label">Fabricante</label>
-                <input type="text" class="form-control" id="fabricante" name="fabricante" placeholder="Digite o nome">
+                <select class="form-select" id="fabricante" name="fabricante" required>
+                    <option value="">Selecione um fabricante</option>
+                </select>
             </div>
             <div class="mb-3">
                 <label for="veiculo" class="form-label">Veículo</label>
@@ -63,69 +65,151 @@
             border-color: #0d6efd;
             box-shadow: 0 0 0 0.2rem rgba(13,110,253,.15);
         }
+        .concessionaria-card {
+            cursor: pointer;
+            border: 1px solid #e3e6ea;
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 8px;
+            background: #fff;
+            transition: box-shadow 0.2s;
+        }
+        .concessionaria-card:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            background: #f1f3f6;
+        }
     </style>
 }
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
-        // Carregar concessionárias no dropdown ao abrir a página (igual à tela inicial)
+        // Listar concessionárias como cards
         fetch('/api/Concessionaria')
             .then(response => response.json())
             .then(concessionarias => {
-                const select = document.getElementById('concessionaria');
-                select.innerHTML = '<option value="">Selecione uma concessionária</option>';
-                concessionarias.forEach(function (c) {
-                    select.innerHTML += `<option value="${c.concessionariaId}">${c.nome}</option>`;
+                const lista = document.getElementById('listaConcessionarias');
+                if (!Array.isArray(concessionarias) || concessionarias.length === 0) {
+                    lista.innerHTML = '<div class="text-center text-muted">Nenhuma concessionária encontrada.</div>';
+                    return;
+                }
+                let html = '<div class="mb-2 fw-bold">Escolha uma concessionária para iniciar a venda:</div>';
+                concessionarias.forEach(c => {
+                    const id = c.concessionariaId || c.id || c.ConcessionariaId;
+                    const nome = c.nome || c.Nome;
+                    html += `<div class='concessionaria-card' data-id='${id}' data-nome='${nome}'>
+                        <span class='fw-bold'>${nome}</span><br>
+                        <small>${c.cidade || c.Cidade || ''} - ${c.estado || c.Estado || ''}</small>
+                    </div>`;
+                });
+                lista.innerHTML = html;
+                // Clique no card
+                $('.concessionaria-card').on('click', function() {
+                    const id = $(this).data('id');
+                    const nome = $(this).data('nome');
+                    $('#concessionaria').val(id);
+                    $('#concessionariaNome').val(nome);
+                    $('#formVenda').show();
+                    $('#listaConcessionarias').hide();
                 });
             });
 
         // Carregar veículos no dropdown ao abrir a página
         fetch('/api/Veiculo')
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) throw new Error('Erro ao buscar veículos');
+                return response.json();
+            })
             .then(veiculos => {
                 const veiculoSelect = document.getElementById('veiculo');
                 veiculoSelect.innerHTML = '<option value="">Selecione um veículo</option>';
-                veiculos.forEach(function (v) {
-                    let nome = v.nome || v.modelo || 'Sem nome';
-                    let fabricante = v.fabricante && v.fabricante.nome ? v.fabricante.nome : '';
-                    veiculoSelect.innerHTML += `<option value="${v.veiculoId}">${nome} ${fabricante ? '- ' + fabricante : ''} (${v.anoFabricacao})</option>`;
-                });
+                if (Array.isArray(veiculos) && veiculos.length > 0) {
+                    veiculos.forEach(function (v) {
+                        const id = v.veiculoId || v.id || v.VeiculoId;
+                        const nome = v.nome || v.Nome || v.modelo || v.Modelo || 'Sem nome';
+                        const fabricante = (v.fabricante && (v.fabricante.nome || v.fabricante.Nome)) ? (v.fabricante.nome || v.fabricante.Nome) : '';
+                        const ano = v.anoFabricacao || v.AnoFabricacao || '';
+                        veiculoSelect.innerHTML += `<option value="${id}">${nome} ${fabricante ? '- ' + fabricante : ''} (${ano})</option>`;
+                    });
+                }
+            })
+            .catch(() => {
+                const veiculoSelect = document.getElementById('veiculo');
+                veiculoSelect.innerHTML = '<option value="">Nenhum veículo encontrado</option>';
             });
 
-        $('#fabricante').on('input', function () {
-            const fabricante = $(this).val();
-            if (fabricante) {
-                $.get(`/Venda/Veiculos?fabricante=${fabricante}`, function (data) {
-                    const veiculoSelect = $('#veiculo');
-                    veiculoSelect.empty();
-                    veiculoSelect.append('<option value="">Selecione um veículo</option>');
-                    data.forEach(veiculo => {
-                        veiculoSelect.append(`<option value="${veiculo.id}">${veiculo.modelo}</option>`);
+        // Carregar fabricantes no dropdown ao abrir a página
+        fetch('/Fabricante')
+            .then(response => response.json())
+            .then(fabricantes => {
+                const select = document.getElementById('fabricante');
+                select.innerHTML = '<option value="">Selecione um fabricante</option>';
+                if (Array.isArray(fabricantes) && fabricantes.length > 0) {
+                    fabricantes.forEach(function (f) {
+                        const id = f.fabricanteId || f.id || f.FabricanteId;
+                        const nome = f.nome || f.Nome;
+                        select.innerHTML += `<option value="${id}">${nome}</option>`;
                     });
-                });
-            } else {
-                // Se o campo fabricante for limpo, recarrega todos os veículos
-                fetch('/api/Veiculo')
-                    .then(response => response.json())
-                    .then(veiculos => {
-                        const veiculoSelect = document.getElementById('veiculo');
-                        veiculoSelect.innerHTML = '<option value="">Selecione um veículo</option>';
-                        veiculos.forEach(function (v) {
-                            let nome = v.nome || v.modelo || 'Sem nome';
-                            let fabricante = v.fabricante && v.fabricante.nome ? v.fabricante.nome : '';
-                            veiculoSelect.innerHTML += `<option value="${v.veiculoId}">${nome} ${fabricante ? '- ' + fabricante : ''} (${v.anoFabricacao})</option>`;
+                }
+            })
+            .catch(() => {
+                const select = document.getElementById('fabricante');
+                select.innerHTML = '<option value="">Nenhum fabricante encontrado</option>';
+            });
+
+        $('#fabricante').on('change', function () {
+            const fabricanteId = $(this).val();
+            const veiculoSelect = $('#veiculo');
+            veiculoSelect.empty();
+            veiculoSelect.append('<option value="">Selecione um veículo</option>');
+            if (fabricanteId) {
+                $.get(`/Venda/VeiculosPorFabricante?fabricanteId=${fabricanteId}`, function (data) {
+                    if (Array.isArray(data) && data.length > 0) {
+                        data.forEach(function (v) {
+                            const id = v.veiculoId || v.id || v.VeiculoId;
+                            const nome = v.nome || v.Nome || v.modelo || v.Modelo || 'Sem nome';
+                            veiculoSelect.append(`<option value="${id}">${nome}</option>`);
                         });
-                    });
+                    }
+                });
             }
         });
 
         $('#formVenda').on('submit', function (e) {
+            // Validação extra: garantir que o campo de concessionária está preenchido
+            if (!$('#concessionaria').val()) {
+                alert('Selecione uma concessionária antes de realizar a venda!');
+                e.preventDefault();
+                return;
+            }
             e.preventDefault();
-            const formData = $(this).serialize();
-            $.post('/Venda/RealizarVenda', formData, function (response) {
-                alert(`Venda realizada com sucesso! Protocolo: ${response.Protocolo}`);
-            }).fail(function (error) {
-                alert(`Erro ao realizar venda: ${error.responseJSON.Erro}`);
+            const formData = {};
+            $(this).serializeArray().forEach(function (item) {
+                // Mapeamento dos nomes para o modelo Venda
+                let key = item.name;
+                if (key === 'concessionaria') key = 'ConcessionariaId';
+                if (key === 'veiculo') key = 'VeiculoId';
+                if (key === 'fabricante') key = 'FabricanteId';
+                if (key === 'clienteNome') key = 'ClienteNome';
+                if (key === 'clienteCpf') key = 'ClienteCPF';
+                if (key === 'clienteTelefone') key = 'ClienteTelefone';
+                if (key === 'dataVenda') key = 'DataVenda';
+                if (key === 'precoVenda') key = 'PrecoVenda';
+                formData[key] = item.value;
+            });
+            $.ajax({
+                url: '/Venda/RealizarVenda',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(formData),
+                success: function (response) {
+                    alert(`Venda realizada com sucesso! Protocolo: ${response.Protocolo}`);
+                },
+                error: function (xhr) {
+                    let msg = 'Erro ao realizar venda.';
+                    if (xhr.responseJSON && xhr.responseJSON.Erro) msg = xhr.responseJSON.Erro;
+                    alert(msg);
+                }
             });
         });
     });

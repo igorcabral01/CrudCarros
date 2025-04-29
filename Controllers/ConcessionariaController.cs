@@ -62,8 +62,8 @@ namespace CrudCarros.Controllers
             {
                 return BadRequest(ModelState);
             }
-            await _concessionariaService.Inserir(concessionaria);
-            return Ok(concessionaria.Nome);
+            var concessionariaSalva = await _concessionariaService.Inserir(concessionaria);
+            return Ok(concessionariaSalva);
         }
 
         [HttpPut("{id}")]

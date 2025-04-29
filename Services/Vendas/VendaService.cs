@@ -32,6 +32,9 @@ namespace CrudCarros.Services.Vendas
             if (veiculo == null || venda.PrecoVenda > veiculo.Preco)
                 throw new Exception("O preço de venda deve ser menor ou igual ao preço do veículo.");
 
+            veiculo.Ativo = false;
+            await _veiculoRepository.Atualizar(veiculo);
+
             venda.NumeroProtocolo = Guid.NewGuid().ToString();
             await _vendaRepository.Adicionar(venda);
 
@@ -51,6 +54,11 @@ namespace CrudCarros.Services.Vendas
         public async Task<IEnumerable<Veiculo>> BuscarVeiculosAsync(string fabricante, string modelo)
         {
             return await _veiculoRepository.BuscarPorFabricanteEModeloAsync(fabricante, modelo);
+        }
+
+        public async Task<IEnumerable<Veiculo>> BuscarVeiculosPorFabricanteAsync(Guid fabricanteId)
+        {
+            return await _veiculoRepository.BuscarPorFabricanteIdAsync(fabricanteId);
         }
     }
 }

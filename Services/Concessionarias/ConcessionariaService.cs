@@ -47,21 +47,21 @@ namespace CrudCarros.Services
             };
         }
 
-        public async Task Inserir(ConcessionariaDto concessionariaDto)
+        public async Task<Concessionaria> Inserir(ConcessionariaDto concessionariaDto)
         {
             var concessionaria = new Concessionaria
             {
-            Nome = concessionariaDto.Nome,
-            Rua = concessionariaDto.Rua,
-            Cidade = concessionariaDto.Cidade,
-            Estado = concessionariaDto.Estado,
-            CEP = concessionariaDto.CEP,
-            Telefone = concessionariaDto.Telefone,
-            Email = concessionariaDto.Email,
-            CapacidadeMaximaVeiculos = concessionariaDto.CapacidadeMaximaVeiculos
+                Nome = concessionariaDto.Nome,
+                Rua = concessionariaDto.Rua,
+                Cidade = concessionariaDto.Cidade,
+                Estado = concessionariaDto.Estado,
+                CEP = concessionariaDto.CEP,
+                Telefone = concessionariaDto.Telefone,
+                Email = concessionariaDto.Email,
+                CapacidadeMaximaVeiculos = concessionariaDto.CapacidadeMaximaVeiculos
             };
-
             await _repository.Adicionar(concessionaria);
+            return concessionaria;
         }
 
         public async Task Atualizar(Concessionaria concessionaria)
