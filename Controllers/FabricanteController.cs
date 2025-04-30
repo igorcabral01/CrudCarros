@@ -90,24 +90,21 @@ namespace CrudCarros.Controllers
             return RedirectToAction("Inserir");
         }
 
-        [HttpPut("{id}")]
+        [HttpPost("Atualizar/{id}")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Atualizar(Guid id, [FromBody] Fabricante fabricante)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
-
             if (id != fabricante.FabricanteId)
-            {
                 return BadRequest("ID mismatch.");
-            }
-
             await _fabricanteService.Update(fabricante);
-            return NoContent();
+            return Ok();
         }
 
-        [HttpDelete("{id}")]
+        // Removido o método HttpDelete Excluir para evitar conflito de rota com o POST do formulário
+        [HttpPost("Excluir")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Excluir(Guid id)
         {
             var fabricante = await _fabricanteService.GetById(id);
@@ -115,9 +112,15 @@ namespace CrudCarros.Controllers
             {
                 return NotFound();
             }
-
             await _fabricanteService.Delete(id);
-            return NoContent();
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet("Index")]
+        public async Task<IActionResult> Index()
+        {
+            var fabricantes = await _fabricanteService.GetAll();
+            return View(fabricantes);
         }
     }
 }

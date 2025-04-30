@@ -238,7 +238,7 @@
             })
             .then(r => r.ok ? r.json() : r.json().then(j => Promise.reject(j)))
             .then(response => {
-                alert('Concessionária cadastrada com sucesso: ' + response.nome);
+                alert('Cadastrado com sucesso!');
                 bootstrap.Modal.getInstance(document.getElementById('modalConcessionaria')).hide();
                 document.getElementById('formConcessionaria').reset();
                 setTimeout(carregarConcessionarias, 500);
@@ -329,7 +329,7 @@
             })
             .then(r => r.ok ? r.json() : r.json().then(j => Promise.reject(j)))
             .then(response => {
-                alert('Veículo cadastrado com sucesso: ' + data.nome);
+                alert('Veículo cadastrado com sucesso!');
                 bootstrap.Modal.getInstance(document.getElementById('modalVeiculo')).hide();
                 document.getElementById('formVeiculo').reset();
             })

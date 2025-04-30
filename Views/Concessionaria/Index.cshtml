@@ -1,0 +1,38 @@
+@model IEnumerable<CrudCarros.Services.Concessionarias.ConcessionariaDto>
+
+@{
+    ViewData["Title"] = "Concessionárias";
+}
+
+<h2>Concessionárias</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Cidade</th>
+            <th>Estado</th>
+            <th>Telefone</th>
+            <th>Email</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.ConcessionariaId</td>
+            <td>@item.Nome</td>
+            <td>@item.Cidade</td>
+            <td>@item.Estado</td>
+            <td>@item.Telefone</td>
+            <td>@item.Email</td>
+            <td>
+                <a asp-action="Detalhes" asp-route-id="@item.ConcessionariaId">Detalhes</a> |
+                <a asp-action="Editar" asp-route-id="@item.ConcessionariaId">Editar</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

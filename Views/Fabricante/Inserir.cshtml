@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', function() {
             AnoDeFundacao: parseInt(document.getElementById('editarAnoDeFundacao').value),
             Website: document.getElementById('editarWebsite').value
         };
-        fetch(`/Fabricante/Editar/${id}`, {
+        fetch(`/Fabricante/Atualizar/${id}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'RequestVerificationToken': document.querySelector('input[name=__RequestVerificationToken]').value },
             body: JSON.stringify(data)

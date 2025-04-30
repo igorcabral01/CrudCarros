@@ -53,7 +53,7 @@ namespace CrudCarros.Controllers
                 return BadRequest(ModelState);
             }
             await _veiculoService.Inserir(veiculo);
-            return Ok(veiculo.Nome);
+            return Ok(new { sucesso = true, nome = veiculo.Nome });
         }
 
         [HttpPut("{id}")]

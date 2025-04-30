@@ -1,0 +1,70 @@
+@model CrudCarros.Models.Concessionaria
+@inject CrudCarros.Services.Vendas.VendaService VendaService
+@{
+    var vendas = await VendaService.ObterVendasPorConcessionariaId(Model.ConcessionariaId);
+}
+
+<h2 class="text-center text-primary mb-4">Detalhes da Concessionária</h2>
+<div class="card mx-auto" style="max-width: 500px;">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-5">Nome</dt>
+            <dd class="col-sm-7">@Model.Nome</dd>
+            <dt class="col-sm-5">Rua</dt>
+            <dd class="col-sm-7">@Model.Rua</dd>
+            <dt class="col-sm-5">Cidade</dt>
+            <dd class="col-sm-7">@Model.Cidade</dd>
+            <dt class="col-sm-5">Estado</dt>
+            <dd class="col-sm-7">@Model.Estado</dd>
+            <dt class="col-sm-5">CEP</dt>
+            <dd class="col-sm-7">@Model.CEP</dd>
+            <dt class="col-sm-5">Telefone</dt>
+            <dd class="col-sm-7">@Model.Telefone</dd>
+            <dt class="col-sm-5">Email</dt>
+            <dd class="col-sm-7">@Model.Email</dd>
+            <dt class="col-sm-5">Capacidade Máxima de Veículos</dt>
+            <dd class="col-sm-7">@Model.CapacidadeMaximaVeiculos</dd>
+        </dl>
+        <div class="d-flex justify-content-between mt-4">
+            <form asp-action="Excluir" asp-controller="Concessionaria" method="post" onsubmit="return confirm('Deseja realmente excluir?');">
+                <input type="hidden" name="id" value="@Model.ConcessionariaId" />
+                <button type="submit" class="btn btn-danger">Excluir</button>
+            </form>
+            <a class="btn btn-primary" href="/Concessionaria/Editar/@Model.ConcessionariaId">Atualizar</a>
+        </div>
+    </div>
+</div>
+
+<h3 class="mt-5 text-primary">Vendas realizadas por esta concessionária</h3>
+@if (vendas.Any())
+{
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>Cliente</th>
+                <th>Veículo</th>
+                <th>Fabricante</th>
+                <th>Data</th>
+                <th>Preço</th>
+                <th>Protocolo</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var venda in vendas)
+        {
+            <tr>
+                <td>@venda.ClienteNome</td>
+                <td>@venda.veiculo?.Nome</td>
+                <td>@venda.Fabricante?.Nome</td>
+                <td>@venda.DataVenda.ToString("dd/MM/yyyy")</td>
+                <td>R$ @venda.PrecoVenda.ToString("N2")</td>
+                <td>@venda.NumeroProtocolo</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-info mt-3">Nenhuma venda realizada por esta concessionária.</div>
+}

@@ -18,14 +18,15 @@ namespace CrudCarros.Services
             var concessionarias = await _repository.ObterTodos();
             return concessionarias.Select(c => new ConcessionariaDto
             {
-            Nome = c.Nome,
-            Rua = c.Rua,
-            Cidade = c.Cidade,
-            Estado = c.Estado,
-            CEP = c.CEP,
-            Telefone = c.Telefone,
-            Email = c.Email,
-            CapacidadeMaximaVeiculos = c.CapacidadeMaximaVeiculos
+                ConcessionariaId = c.ConcessionariaId,
+                Nome = c.Nome,
+                Rua = c.Rua,
+                Cidade = c.Cidade,
+                Estado = c.Estado,
+                CEP = c.CEP,
+                Telefone = c.Telefone,
+                Email = c.Email,
+                CapacidadeMaximaVeiculos = c.CapacidadeMaximaVeiculos
             });
         }
 
@@ -72,6 +73,11 @@ namespace CrudCarros.Services
         public async Task Excluir(Guid id)
         {
             await _repository.Excluir(id);
+        }
+
+        public async Task<Concessionaria?> ObterEntidadePorId(Guid id)
+        {
+            return await _repository.ObterPorId(id);
         }
     }
 }

@@ -43,5 +43,14 @@ namespace CrudCarros.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task<IEnumerable<Venda>> ObterPorConcessionariaId(Guid concessionariaId)
+        {
+            return await _context.Vendas
+                .Where(v => v.ConcessionariaId == concessionariaId)
+                .Include(v => v.veiculo)
+                .Include(v => v.Fabricante)
+                .ToListAsync();
+        }
     }
 }

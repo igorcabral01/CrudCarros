@@ -1,99 +1,94 @@
 using CrudCarros.Models;
 using CrudCarros.Services;
 using CrudCarros.Services.Concessionarias;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
 
 namespace CrudCarros.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class ConcessionariaController : ControllerBase
+    [Route("Concessionaria")]
+    public class ConcessionariaController : Controller
     {
         private readonly ConcessionariaService _concessionariaService;
-        private readonly IMemoryCache _memoryCache;
 
-        public ConcessionariaController(ConcessionariaService concessionariaService, IMemoryCache memoryCache)
+        public ConcessionariaController(ConcessionariaService concessionariaService)
         {
             _concessionariaService = concessionariaService;
-            _memoryCache = memoryCache;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> ObterTodos()
+        // --- Ações MVC (Views) ---
+        [HttpGet("")]
+        public async Task<IActionResult> Index()
         {
-            string cacheKey = "Concessionarias";
-            if (!_memoryCache.TryGetValue(cacheKey, out IEnumerable<Concessionaria>? concessionarias) || concessionarias == null)
-            {
-                var concessionariaDtos = await _concessionariaService.ObterTodos();
-                concessionarias = concessionariaDtos.Select(dto => new Concessionaria
-                {
-                    Nome = dto.Nome,
-                    Rua = dto.Rua,
-                    Cidade = dto.Cidade,
-                    Estado = dto.Estado,
-                    CEP = dto.CEP,
-                    Telefone = dto.Telefone,
-                    Email = dto.Email,
-                    CapacidadeMaximaVeiculos = dto.CapacidadeMaximaVeiculos,
-                    
-                });
-                var cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(5));
-                _memoryCache.Set(cacheKey, concessionarias, cacheEntryOptions);
-            }
+            var concessionarias = await _concessionariaService.ObterTodos();
+            return View(concessionarias);
+        }
+
+        [HttpGet("Detalhes/{id}")]
+        public async Task<IActionResult> Detalhes(Guid id)
+        {
+            var concessionaria = await _concessionariaService.ObterEntidadePorId(id);
+            if (concessionaria == null)
+                return View("ConcessionariaNaoEncontrada");
+            return View(concessionaria);
+        }
+
+        [HttpGet("Editar/{id}")]
+        public async Task<IActionResult> Editar(Guid id)
+        {
+            var concessionaria = await _concessionariaService.ObterEntidadePorId(id);
+            if (concessionaria == null)
+                return NotFound();
+            return View(concessionaria);
+        }
+
+        [HttpPost("Editar/{id}")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Editar(Guid id, Concessionaria concessionaria)
+        {
+            if (!ModelState.IsValid)
+                return View(concessionaria);
+            if (id != concessionaria.ConcessionariaId)
+                return BadRequest();
+            await _concessionariaService.Atualizar(concessionaria);
+            return RedirectToAction("Detalhes", new { id = concessionaria.ConcessionariaId });
+        }
+
+        [HttpPost("Excluir")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Excluir(Guid id)
+        {
+            await _concessionariaService.Excluir(id);
+            return RedirectToAction("Index", "Home");
+        }
+
+        // --- Ações API REST ---
+        [HttpGet]
+        [Route("/api/Concessionaria")]
+        public async Task<IActionResult> GetAll()
+        {
+            var concessionarias = await _concessionariaService.ObterTodos();
             return Ok(concessionarias);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> ObterPorId(Guid id)
+        [HttpGet]
+        [Route("/api/Concessionaria/{id}")]
+        public async Task<IActionResult> GetById(Guid id)
         {
             var concessionaria = await _concessionariaService.ObterPorId(id);
             if (concessionaria == null)
-            {
                 return NotFound();
-            }
             return Ok(concessionaria);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Inserir([FromBody] ConcessionariaDto concessionaria)
+        [Route("/api/Concessionaria")]
+        public async Task<IActionResult> Post([FromBody] CrudCarros.Services.Concessionarias.ConcessionariaDto dto)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
-            var concessionariaSalva = await _concessionariaService.Inserir(concessionaria);
-            return Ok(concessionariaSalva);
-        }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Atualizar(Guid id, [FromBody] Concessionaria concessionaria)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != concessionaria.ConcessionariaId)
-            {
-                return BadRequest("ID mismatch.");
-            }
-
-            await _concessionariaService.Atualizar(concessionaria);
-            return NoContent();
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Excluir(Guid id)
-        {
-            var concessionaria = await _concessionariaService.ObterPorId(id);
-            if (concessionaria == null)
-            {
-                return NotFound();
-            }
-
-            await _concessionariaService.Excluir(id);
-            return NoContent();
+            var concessionaria = await _concessionariaService.Inserir(dto);
+            return Ok(concessionaria);
         }
     }
 }

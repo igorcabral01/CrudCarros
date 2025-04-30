@@ -32,6 +32,22 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cVXN1YXJpb3MuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Igorc/Desktop/CrudCarros/Views/Concessionaria/ConcessionariaNaoEncontrada.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29uY2Vzc2lvbmFyaWFcQ29uY2Vzc2lvbmFyaWFOYW9FbmNvbnRyYWRhLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Igorc/Desktop/CrudCarros/Views/Concessionaria/Detalhes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29uY2Vzc2lvbmFyaWFcRGV0YWxoZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Igorc/Desktop/CrudCarros/Views/Concessionaria/Editar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29uY2Vzc2lvbmFyaWFcRWRpdGFyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Igorc/Desktop/CrudCarros/Views/Concessionaria/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29uY2Vzc2lvbmFyaWFcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Igorc/Desktop/CrudCarros/Views/Fabricante/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFicmljYW50ZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

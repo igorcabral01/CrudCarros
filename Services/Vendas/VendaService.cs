@@ -60,5 +60,10 @@ namespace CrudCarros.Services.Vendas
         {
             return await _veiculoRepository.BuscarPorFabricanteIdAsync(fabricanteId);
         }
+
+        public async Task<IEnumerable<Venda>> ObterVendasPorConcessionariaId(Guid concessionariaId)
+        {
+            return await _vendaRepository.ObterPorConcessionariaId(concessionariaId);
+        }
     }
 }
