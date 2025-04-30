@@ -24,6 +24,8 @@ O CrudCarros é uma aplicação ASP.NET Core MVC com Entity Framework Core, foca
 - Bootstrap 5
 - SQL Server (LocalDB ou outro)
 - Swagger (documentação de API)
+- QuestPDF (relatórios em PDF)
+- Chart.js (gráficos interativos)
 
 ## Como Executar
 1. **Pré-requisitos:**
