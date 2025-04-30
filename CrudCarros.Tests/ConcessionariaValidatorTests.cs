@@ -17,7 +17,7 @@ namespace CrudCarros.Tests
                 Cidade = "Cidade Exemplo",
                 Estado = "SP",
                 CEP = "12345-678",
-                Telefone = "11999999999", // formato aceito pelo Validator
+                Telefone = "11999999999", 
                 Email = "exemplo@concessionaria.com",
                 CapacidadeMaximaVeiculos = 100
             };

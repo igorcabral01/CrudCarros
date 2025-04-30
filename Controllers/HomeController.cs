@@ -31,10 +31,10 @@ public class HomeController : Controller
         string cacheKey = "ExampleKey";
         string cachedData;
 
-        // Tenta obter o valor do cache
+       
         if (!_memoryCache.TryGetValue(cacheKey, out cachedData!))
         {
-            // Se não estiver no cache, define o valor
+            
             cachedData = "Este é um exemplo de cache.";
 
             var cacheEntryOptions = new MemoryCacheEntryOptions()

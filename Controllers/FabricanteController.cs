@@ -102,7 +102,7 @@ namespace CrudCarros.Controllers
             return Ok();
         }
 
-        // Removido o método HttpDelete Excluir para evitar conflito de rota com o POST do formulário
+      
         [HttpPost("Excluir")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Excluir(Guid id)
