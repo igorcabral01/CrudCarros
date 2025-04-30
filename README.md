@@ -26,11 +26,13 @@ O CrudCarros é uma aplicação ASP.NET Core MVC com Entity Framework Core, foca
 - Swagger (documentação de API)
 - QuestPDF (relatórios em PDF)
 - Chart.js (gráficos interativos)
+- SonarQube (análise de qualidade de código)
 
 ## Como Executar
 1. **Pré-requisitos:**
    - .NET 9.0 SDK
    - SQL Server LocalDB ou outro SQL Server
+   - (Opcional) SonarQube Community Edition para análise de qualidade de código
 
 2. **Configuração:**
    - Ajuste a string de conexão em `appsettings.json`.
@@ -48,7 +50,21 @@ O CrudCarros é uma aplicação ASP.NET Core MVC com Entity Framework Core, foca
      ```
    - Acesse: https://localhost:5001 ou http://localhost:5000
 
-3. **Acesso:**
+3. **Análise de Qualidade de Código (SonarQube):**
+   - Instale o SonarQube localmente e inicie o servidor (StartSonar.bat).
+   - Instale o SonarScanner para .NET:
+     ```bash
+     dotnet tool install --global dotnet-sonarscanner
+     ```
+   - Execute os comandos abaixo na raiz do projeto para rodar a análise:
+     ```bash
+     dotnet sonarscanner begin /k:"CrudCarris" /d:sonar.host.url="http://localhost:9000" /d:sonar.token="SEU_TOKEN"
+     dotnet build CrudCarros.sln
+     dotnet sonarscanner end /d:sonar.token="SEU_TOKEN"
+     ```
+   - Acesse http://localhost:9000 para visualizar o relatório.
+
+4. **Acesso:**
    - Tela de login disponível na raiz.
    - Usuário admin padrão: `admin@admin.com` / senha: `Admin123!`
    - Registre novos usuários conforme necessário.

@@ -1,0 +1,3 @@
+dotnet sonarscanner begin /k:"CrudCarris" /d:sonar.host.url="http://localhost:9000" /d:sonar.token="sqp_bb712c5394141180e907b621e222579d27495bcf"
+dotnet build CrudCarros.sln
+dotnet sonarscanner end /d:sonar.token="sqp_bb712c5394141180e907b621e222579d27495bcf"

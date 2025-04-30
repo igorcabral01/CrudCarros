@@ -1,0 +1,1 @@
+IR3C:\Users\Igorc\Desktop\CrudCarros\CrudCarros.csproj¢net9.0òCSharp13
